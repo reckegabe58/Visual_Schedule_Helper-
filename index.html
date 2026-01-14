@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Circle - Grade 3/4 Classroom</title>
+    <meta name="description" content="Welcome to our Grade 3/4 classroom - a calm space for discovery, growth, and connection.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/main.css">
+
+    <style>
+        /* Page-specific styles */
+        .hero-section {
+            position: relative;
+            height: 480px;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            margin-bottom: var(--space-12);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #267340 0%, #1c5730 50%, #6a8171 100%);
+            opacity: 0.95;
+        }
+
+        .hero-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.1;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: var(--space-8);
+        }
+
+        .hero-content h1 {
+            color: white;
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            margin-bottom: var(--space-4);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-content p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: var(--text-xl);
+            max-width: 600px;
+            margin-bottom: var(--space-8);
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: var(--space-4);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .hero-actions .btn-primary {
+            background-color: white;
+            color: var(--color-primary);
+        }
+
+        .hero-actions .btn-primary:hover {
+            background-color: var(--color-bg-base);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-actions .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            backdrop-filter: blur(8px);
+        }
+
+        .hero-actions .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: white;
+        }
+
+        /* Welcome section */
+        .welcome-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-8);
+            margin-bottom: var(--space-12);
+        }
+
+        @media (min-width: 1024px) {
+            .welcome-grid {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .welcome-card {
+            background-color: var(--color-bg-surface);
+            padding: var(--space-10);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+        }
+
+        .welcome-card h2 {
+            font-size: var(--text-3xl);
+            margin-bottom: var(--space-4);
+        }
+
+        .welcome-card p {
+            font-size: var(--text-lg);
+            margin-bottom: var(--space-6);
+        }
+
+        .welcome-tags {
+            display: flex;
+            gap: var(--space-4);
+            flex-wrap: wrap;
+        }
+
+        .welcome-tag {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-weight: 600;
+            font-size: var(--text-sm);
+        }
+
+        .welcome-tag.green {
+            color: var(--color-primary);
+        }
+
+        .welcome-tag.brown {
+            color: var(--color-earth-brown);
+        }
+
+        .focus-card {
+            background-color: var(--color-sky-blue-10);
+            border: 2px dashed var(--color-sky-blue);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .focus-card .material-symbols-outlined {
+            font-size: 48px;
+            color: var(--color-sky-blue);
+            margin-bottom: var(--space-4);
+        }
+
+        .focus-card h3 {
+            margin-bottom: var(--space-2);
+        }
+
+        .focus-card p {
+            font-size: var(--text-base);
+        }
+
+        /* Dashboard cards */
+        .dashboard-card {
+            background-color: var(--color-bg-surface);
+            padding: var(--space-6);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-base);
+            cursor: pointer;
+        }
+
+        .dashboard-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .dashboard-card:hover .icon-box {
+            color: white;
+        }
+
+        .dashboard-card:hover .icon-box-primary {
+            background-color: var(--color-primary);
+        }
+
+        .dashboard-card:hover .icon-box-sky {
+            background-color: var(--color-sky-blue);
+        }
+
+        .dashboard-card:hover .icon-box-earth {
+            background-color: var(--color-earth-brown);
+        }
+
+        .dashboard-card .icon-box {
+            margin-bottom: var(--space-4);
+        }
+
+        .dashboard-card h4 {
+            margin-bottom: var(--space-2);
+        }
+
+        .dashboard-card p {
+            font-size: var(--text-sm);
+        }
+
+        /* Daily rhythm section */
+        .rhythm-section {
+            background-color: var(--color-bg-surface);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--space-12);
+        }
+
+        .rhythm-header {
+            padding: var(--space-8);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .rhythm-header h2 {
+            margin-bottom: var(--space-1);
+        }
+
+        .rhythm-header p {
+            font-size: var(--text-sm);
+        }
+
+        .rhythm-content {
+            padding: var(--space-8);
+        }
+
+        .rhythm-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-6);
+        }
+
+        .rhythm-time {
+            width: 80px;
+            padding-top: var(--space-1);
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: var(--text-sm);
+            color: var(--color-primary);
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .rhythm-item:not(:last-child) .rhythm-time {
+            color: var(--color-ochre);
+        }
+
+        .rhythm-item:last-child .rhythm-time {
+            color: var(--color-earth-brown);
+        }
+
+        .rhythm-details {
+            flex: 1;
+            padding-bottom: var(--space-6);
+            padding-left: var(--space-8);
+            border-left: 2px solid var(--color-primary-20);
+            position: relative;
+        }
+
+        .rhythm-item:last-child .rhythm-details {
+            border-left-color: transparent;
+        }
+
+        .rhythm-dot {
+            position: absolute;
+            left: -9px;
+            top: 4px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--color-primary);
+            box-shadow: 0 0 0 4px var(--color-primary-10);
+        }
+
+        .rhythm-item:nth-child(2) .rhythm-dot {
+            background-color: var(--color-sky-blue);
+            box-shadow: 0 0 0 4px var(--color-sky-blue-10);
+        }
+
+        .rhythm-item:nth-child(3) .rhythm-dot {
+            background-color: var(--color-earth-brown);
+            box-shadow: 0 0 0 4px var(--color-earth-brown-10);
+        }
+
+        .rhythm-details h5 {
+            font-size: var(--text-lg);
+            margin-bottom: var(--space-1);
+        }
+
+        .rhythm-details p {
+            font-size: var(--text-sm);
+        }
+
+        /* See all link */
+        .see-all-link {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: var(--text-sm);
+            color: var(--color-primary);
+        }
+
+        .see-all-link:hover {
+            text-decoration: underline;
+        }
+
+        .see-all-link .material-symbols-outlined {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="site-logo">
+                <div class="site-logo-icon">
+                    <span class="material-symbols-outlined">nature_people</span>
+                </div>
+                <div class="site-logo-text">
+                    <span class="site-logo-name">Learning Circle</span>
+                    <span class="site-logo-subtitle">Grade 3/4 Classroom</span>
+                </div>
+            </a>
+
+            <nav class="main-nav" role="navigation" aria-label="Main navigation">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="schedule.html" class="nav-link">Schedule</a>
+                <a href="resources.html" class="nav-link">Resources</a>
+                <a href="news.html" class="nav-link">News</a>
+            </nav>
+
+            <button class="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" role="navigation" aria-label="Mobile navigation">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="schedule.html" class="nav-link">Schedule</a>
+        <a href="resources.html" class="nav-link">Resources</a>
+        <a href="news.html" class="nav-link">News</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero-section" aria-labelledby="hero-title">
+                <div class="hero-bg"></div>
+                <div class="hero-pattern"></div>
+                <div class="hero-content">
+                    <h1 id="hero-title">Boozhoo, Welcome Home</h1>
+                    <p>A calm space for discovery, growth, and connection with our natural world.</p>
+                    <div class="hero-actions">
+                        <a href="schedule.html" class="btn btn-primary btn-lg">
+                            <span class="material-symbols-outlined">calendar_today</span>
+                            View Daily Schedule
+                        </a>
+                        <a href="#about" class="btn btn-secondary btn-lg">
+                            Meet the Teacher
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Welcome Section -->
+            <div class="welcome-grid">
+                <div class="welcome-card">
+                    <h2>Welcome to our Classroom</h2>
+                    <p>We focus on creating a peaceful environment for students and families to thrive together. Inspired by the natural rhythms of the earth, our classroom is a place of respect, curiosity, and shared wisdom.</p>
+                    <div class="welcome-tags">
+                        <span class="welcome-tag brown">
+                            <span class="material-symbols-outlined">psychology_alt</span>
+                            Guided Growth
+                        </span>
+                        <span class="welcome-tag green">
+                            <span class="material-symbols-outlined">eco</span>
+                            Nature-Based
+                        </span>
+                    </div>
+                </div>
+                <div class="focus-card">
+                    <span class="material-symbols-outlined">stars</span>
+                    <h3>Today's Focus</h3>
+                    <p>Learning through exploration and discovery together.</p>
+                </div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <section class="section" aria-labelledby="dashboard-title">
+                <div class="section-header">
+                    <h2 id="dashboard-title">Classroom Pulse</h2>
+                    <a href="news.html" class="see-all-link">
+                        See all updates
+                        <span class="material-symbols-outlined">arrow_forward</span>
+                    </a>
+                </div>
+
+                <div class="grid grid-3">
+                    <div class="dashboard-card" role="article">
+                        <div class="icon-box icon-box-primary">
+                            <span class="material-symbols-outlined">campaign</span>
+                        </div>
+                        <h4>Weekly News</h4>
+                        <p>Our latest classroom adventures and updates for families.</p>
+                    </div>
+
+                    <a href="schedule.html" class="dashboard-card" role="article" style="text-decoration: none; color: inherit;">
+                        <div class="icon-box icon-box-sky">
+                            <span class="material-symbols-outlined">event_note</span>
+                        </div>
+                        <h4>Daily Schedule</h4>
+                        <p>See what we're learning today and plan ahead.</p>
+                    </a>
+
+                    <a href="resources.html" class="dashboard-card" role="article" style="text-decoration: none; color: inherit;">
+                        <div class="icon-box icon-box-earth">
+                            <span class="material-symbols-outlined">folder_open</span>
+                        </div>
+                        <h4>Resources</h4>
+                        <p>Access learning materials and helpful links.</p>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Daily Rhythm Section -->
+            <section class="rhythm-section" aria-labelledby="rhythm-title">
+                <div class="rhythm-header">
+                    <h2 id="rhythm-title">Daily Rhythm</h2>
+                    <p>Following the flow of our learning day</p>
+                </div>
+                <div class="rhythm-content">
+                    <div class="rhythm-item">
+                        <div class="rhythm-time">9:00 AM</div>
+                        <div class="rhythm-details">
+                            <div class="rhythm-dot"></div>
+                            <h5>Morning Circle</h5>
+                            <p>Starting our day together with greetings and intentions.</p>
+                        </div>
+                    </div>
+                    <div class="rhythm-item">
+                        <div class="rhythm-time">10:00 AM</div>
+                        <div class="rhythm-details">
+                            <div class="rhythm-dot"></div>
+                            <h5>Literacy & Learning</h5>
+                            <p>Reading, writing, and storytelling time.</p>
+                        </div>
+                    </div>
+                    <div class="rhythm-item">
+                        <div class="rhythm-time">12:00 PM</div>
+                        <div class="rhythm-details">
+                            <div class="rhythm-dot"></div>
+                            <h5>Lunch & Movement</h5>
+                            <p>Nourishment and outdoor play.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="site-logo">
+                        <div class="site-logo-icon">
+                            <span class="material-symbols-outlined">school</span>
+                        </div>
+                        <span class="site-logo-name">Learning Circle</span>
+                    </a>
+                    <p>A collaborative learning community dedicated to fostering respect for all living things and the pursuit of lifelong wisdom.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="schedule.html">Daily Schedule</a></li>
+                        <li><a href="resources.html">Resources</a></li>
+                        <li><a href="news.html">News</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>School Info</h4>
+                    <ul class="footer-links">
+                        <li>Grade 3/4 Classroom</li>
+                        <li>9:00 AM - 3:30 PM</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Learning Circle Classroom. Made with care for students and families.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="scripts/main.js"></script>
+</body>
+</html>

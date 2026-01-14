@@ -1,0 +1,194 @@
+/* ===========================================
+   Design Tokens - Learning Circle Classroom
+   Soft & Warm aesthetic for Grade 3/4 students
+   =========================================== */
+
+:root {
+    /* ===== Color Palette ===== */
+
+    /* Primary Green - Forest/Nature theme */
+    --color-primary: #267340;
+    --color-primary-light: #3a8a54;
+    --color-primary-lighter: #4ea168;
+    --color-primary-dark: #1c5730;
+    --color-primary-10: rgba(38, 115, 64, 0.1);
+    --color-primary-20: rgba(38, 115, 64, 0.2);
+
+    /* Background Layers (light mode) */
+    --color-bg-base: #f4f3f0;        /* Soft sand - deepest */
+    --color-bg-elevated: #faf9f7;    /* Slightly lifted */
+    --color-bg-surface: #ffffff;     /* Cards, panels */
+    --color-bg-overlay: rgba(255, 255, 255, 0.9);
+
+    /* Accent Colors */
+    --color-sky-blue: #87B9C9;
+    --color-sky-blue-light: #a3ccd8;
+    --color-sky-blue-10: rgba(135, 185, 201, 0.1);
+
+    --color-earth-brown: #9A7D6F;
+    --color-earth-brown-light: #b39789;
+    --color-earth-brown-10: rgba(154, 125, 111, 0.1);
+
+    --color-ochre: #c88d32;
+    --color-ochre-light: #daa54d;
+    --color-ochre-10: rgba(200, 141, 50, 0.1);
+
+    --color-muted-green: #6a8171;
+
+    /* Text Colors */
+    --color-text-primary: #121614;
+    --color-text-secondary: #6a8171;
+    --color-text-muted: #8a9a8f;
+    --color-text-inverse: #ffffff;
+
+    /* Borders */
+    --color-border: #dde3df;
+    --color-border-light: #e8ece9;
+
+    /* Status Colors */
+    --color-success: #267340;
+    --color-warning: #c88d32;
+    --color-error: #c44536;
+    --color-info: #87B9C9;
+
+    /* ===== Typography ===== */
+    --font-display: 'Lexend', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+
+    /* Font Sizes - Larger for Grade 3/4 accessibility */
+    --text-xs: 0.75rem;      /* 12px */
+    --text-sm: 0.875rem;     /* 14px */
+    --text-base: 1rem;       /* 16px */
+    --text-lg: 1.125rem;     /* 18px */
+    --text-xl: 1.25rem;      /* 20px */
+    --text-2xl: 1.5rem;      /* 24px */
+    --text-3xl: 1.875rem;    /* 30px */
+    --text-4xl: 2.25rem;     /* 36px */
+    --text-5xl: 3rem;        /* 48px */
+
+    /* Line Heights */
+    --leading-tight: 1.25;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.625;
+
+    /* ===== Spacing ===== */
+    --space-1: 0.25rem;      /* 4px */
+    --space-2: 0.5rem;       /* 8px */
+    --space-3: 0.75rem;      /* 12px */
+    --space-4: 1rem;         /* 16px */
+    --space-5: 1.25rem;      /* 20px */
+    --space-6: 1.5rem;       /* 24px */
+    --space-8: 2rem;         /* 32px */
+    --space-10: 2.5rem;      /* 40px */
+    --space-12: 3rem;        /* 48px */
+    --space-16: 4rem;        /* 64px */
+
+    /* ===== Border Radius ===== */
+    --radius-sm: 0.375rem;   /* 6px */
+    --radius-md: 0.5rem;     /* 8px */
+    --radius-lg: 1rem;       /* 16px */
+    --radius-xl: 1.5rem;     /* 24px */
+    --radius-full: 9999px;
+
+    /* ===== Shadows (Two-Layer System) ===== */
+
+    /* Small - Subtle elevation */
+    --shadow-sm:
+        0 1px 2px rgba(0, 0, 0, 0.04),
+        0 1px 1px rgba(0, 0, 0, 0.02);
+
+    /* Medium - Standard cards */
+    --shadow-md:
+        0 4px 12px rgba(0, 0, 0, 0.06),
+        0 1px 3px rgba(0, 0, 0, 0.04);
+
+    /* Large - Hover/Focus states */
+    --shadow-lg:
+        0 10px 30px rgba(0, 0, 0, 0.08),
+        0 4px 8px rgba(0, 0, 0, 0.04);
+
+    /* XL - Prominent elements */
+    --shadow-xl:
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        0 8px 16px rgba(0, 0, 0, 0.06);
+
+    /* Colored shadows for interactive elements */
+    --shadow-primary:
+        0 10px 30px rgba(38, 115, 64, 0.15),
+        0 4px 8px rgba(38, 115, 64, 0.1);
+
+    /* Inset shadow for pressed/sunken states */
+    --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+
+    /* ===== Transitions ===== */
+    --transition-fast: 150ms ease;
+    --transition-base: 200ms ease;
+    --transition-slow: 300ms ease;
+    --transition-bounce: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* ===== Z-Index Scale ===== */
+    --z-base: 0;
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-modal: 300;
+    --z-tooltip: 400;
+    --z-toast: 500;
+
+    /* ===== Layout ===== */
+    --max-width: 1200px;
+    --max-width-narrow: 960px;
+    --header-height: 72px;
+}
+
+/* ===== Dark Mode Overrides ===== */
+.dark {
+    --color-bg-base: #1a1c1e;
+    --color-bg-elevated: #22252a;
+    --color-bg-surface: #2a2e33;
+    --color-bg-overlay: rgba(26, 28, 30, 0.95);
+
+    --color-text-primary: #f4f3f0;
+    --color-text-secondary: #a3b0a8;
+    --color-text-muted: #6a8171;
+
+    --color-border: #333b35;
+    --color-border-light: #3d453f;
+
+    --shadow-sm:
+        0 1px 2px rgba(0, 0, 0, 0.2),
+        0 1px 1px rgba(0, 0, 0, 0.1);
+
+    --shadow-md:
+        0 4px 12px rgba(0, 0, 0, 0.3),
+        0 1px 3px rgba(0, 0, 0, 0.2);
+
+    --shadow-lg:
+        0 10px 30px rgba(0, 0, 0, 0.4),
+        0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== Subject Card Colors ===== */
+:root {
+    /* Academic subjects - Primary green family */
+    --card-math: #267340;
+    --card-reading: #3a8a54;
+    --card-science: #1c5730;
+    --card-social-studies: #4ea168;
+
+    /* Language & Literacy - Sky blue family */
+    --card-lexia: #87B9C9;
+    --card-symphony: #6aa3b5;
+    --card-oji-cree: #5691a3;
+
+    /* Breaks & Activities - Warm tones */
+    --card-lunch: #c88d32;
+    --card-recess: #daa54d;
+    --card-preferred: #e6b85a;
+
+    /* Specials - Earth brown family */
+    --card-gym: #9A7D6F;
+    --card-art: #b39789;
+
+    /* Custom - Neutral */
+    --card-custom: #6a8171;
+}
