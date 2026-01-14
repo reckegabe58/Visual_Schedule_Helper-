@@ -250,16 +250,18 @@ function renderScheduleBlock(block, index) {
                        aria-label="Block label (click to edit)">
 
                 <div class="block-time-row">
-                    <input type="time"
+                    <input type="text"
                            class="block-time-input"
-                           value="${ScheduleData.timeTo24hString(block.startTime)}"
+                           value="${block.startTime ? ScheduleData.formatTime(block.startTime) : ''}"
                            data-field="startTime"
+                           placeholder="9:00 AM"
                            aria-label="Start time">
                     <span class="time-separator">to</span>
-                    <input type="time"
+                    <input type="text"
                            class="block-time-input"
-                           value="${ScheduleData.timeTo24hString(block.endTime)}"
+                           value="${block.endTime ? ScheduleData.formatTime(block.endTime) : ''}"
                            data-field="endTime"
+                           placeholder="9:30 AM"
                            aria-label="End time">
                     <div class="block-duration">
                         <span>${block.duration} min</span>
@@ -816,6 +818,43 @@ function setupToolbarActions() {
     document.getElementById('display-mode')?.addEventListener('click', () => {
         window.location.href = `display.html?date=${ScheduleData.getDateKey(currentDate)}`;
     });
+
+    // Quick Add Lunch - 12:00 PM to 1:00 PM
+    document.getElementById('add-lunch')?.addEventListener('click', addQuickLunch);
+}
+
+// Add Lunch block (12:00 PM - 1:00 PM)
+function addQuickLunch() {
+    // Check if lunch already exists
+    const existingLunch = scheduleBlocks.find(b =>
+        b.cardId === 'lunch' &&
+        b.startTime?.hours === 12 &&
+        b.startTime?.minutes === 0
+    );
+
+    if (existingLunch) {
+        showToast('Lunch already added for today');
+        return;
+    }
+
+    const lunchBlock = ScheduleData.createBlock('lunch');
+    lunchBlock.startTime = { hours: 12, minutes: 0 };
+    lunchBlock.endTime = { hours: 13, minutes: 0 };
+    lunchBlock.duration = 60;
+
+    // Find the right position (after morning blocks, before afternoon)
+    let insertIndex = scheduleBlocks.length;
+    for (let i = 0; i < scheduleBlocks.length; i++) {
+        const block = scheduleBlocks[i];
+        if (block.startTime && block.startTime.hours >= 12) {
+            insertIndex = i;
+            break;
+        }
+    }
+
+    scheduleBlocks.splice(insertIndex, 0, lunchBlock);
+    saveAndRender();
+    showToast('Lunch added (12:00 - 1:00 PM)');
 }
 
 // ===== Modal Handlers =====
