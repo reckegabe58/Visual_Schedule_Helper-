@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <!-- Symphony Math - Musical math theme -->
+  <circle cx="40" cy="40" r="26" fill="currentColor" fill-opacity="0.15"/>
+  <!-- Musical note with numbers -->
+  <ellipse cx="32" cy="50" rx="8" ry="6" fill="currentColor"/>
+  <rect x="38" y="24" width="4" height="28" rx="2" fill="currentColor"/>
+  <path d="M40 24C40 24 52 28 52 36C52 42 44 42 40 38" fill="currentColor"/>
+  <!-- Small numbers -->
+  <text x="50" y="55" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="currentColor">123</text>
+</svg>

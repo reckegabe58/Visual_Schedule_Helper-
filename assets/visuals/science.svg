@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <!-- Science - Beaker/Flask -->
+  <path d="M30 14H50V26L60 54C62 60 58 66 52 66H28C22 66 18 60 20 54L30 26V14Z" fill="currentColor" fill-opacity="0.15"/>
+  <!-- Liquid -->
+  <path d="M26 50L34 34V26H46V34L54 50C56 54 54 58 50 58H30C26 58 24 54 26 50Z" fill="currentColor" fill-opacity="0.35"/>
+  <!-- Flask neck -->
+  <rect x="32" y="12" width="16" height="6" rx="2" fill="currentColor"/>
+  <!-- Bubbles -->
+  <circle cx="36" cy="48" r="3" fill="currentColor" fill-opacity="0.6"/>
+  <circle cx="44" cy="44" r="2" fill="currentColor" fill-opacity="0.6"/>
+  <circle cx="40" cy="52" r="2.5" fill="currentColor" fill-opacity="0.6"/>
+  <!-- Atom decoration -->
+  <circle cx="58" cy="22" r="3" fill="currentColor"/>
+  <ellipse cx="58" cy="22" rx="8" ry="4" stroke="currentColor" stroke-width="1.5" fill="none" transform="rotate(-30 58 22)"/>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <!-- Recess - Playground/Ball -->
+  <circle cx="40" cy="38" r="22" fill="currentColor" fill-opacity="0.2"/>
+  <circle cx="40" cy="38" r="18" fill="currentColor" fill-opacity="0.3"/>
+  <!-- Ball pattern -->
+  <path d="M40 20C40 20 48 30 48 38C48 46 40 56 40 56" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M22 38H58" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+  <!-- Ground -->
+  <path d="M15 62C15 62 28 58 40 58C52 58 65 62 65 62" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <!-- Bounce lines -->
+  <path d="M40 56L40 62" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 3"/>
+</svg>

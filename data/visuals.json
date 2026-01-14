@@ -1,0 +1,171 @@
+{
+  "version": "1.0",
+  "description": "Visual card definitions for the classroom schedule",
+  "categories": [
+    {
+      "id": "academic",
+      "label": "Academic",
+      "order": 1
+    },
+    {
+      "id": "literacy",
+      "label": "Literacy & Language",
+      "order": 2
+    },
+    {
+      "id": "breaks",
+      "label": "Breaks & Activities",
+      "order": 3
+    },
+    {
+      "id": "specials",
+      "label": "Specials",
+      "order": 4
+    },
+    {
+      "id": "custom-icons",
+      "label": "Custom Icons",
+      "order": 5
+    }
+  ],
+  "cards": [
+    {
+      "id": "math",
+      "label": "Math",
+      "category": "academic",
+      "image": "assets/visuals/math.svg",
+      "color": "#267340",
+      "defaultDuration": 30
+    },
+    {
+      "id": "science",
+      "label": "Science",
+      "category": "academic",
+      "image": "assets/visuals/science.svg",
+      "color": "#1c5730",
+      "defaultDuration": 30
+    },
+    {
+      "id": "social-studies",
+      "label": "Social Studies",
+      "category": "academic",
+      "image": "assets/visuals/social-studies.svg",
+      "color": "#4ea168",
+      "defaultDuration": 30
+    },
+    {
+      "id": "reading",
+      "label": "Reading / Literacy",
+      "category": "literacy",
+      "image": "assets/visuals/reading.svg",
+      "color": "#3a8a54",
+      "defaultDuration": 30
+    },
+    {
+      "id": "lexia",
+      "label": "Lexia",
+      "category": "literacy",
+      "image": "assets/visuals/lexia.svg",
+      "color": "#87B9C9",
+      "defaultDuration": 30
+    },
+    {
+      "id": "symphony",
+      "label": "Symphony Math",
+      "category": "literacy",
+      "image": "assets/visuals/symphony.svg",
+      "color": "#6aa3b5",
+      "defaultDuration": 30
+    },
+    {
+      "id": "oji-cree",
+      "label": "Oji-Cree Language",
+      "category": "literacy",
+      "image": "assets/visuals/oji-cree.svg",
+      "color": "#5691a3",
+      "defaultDuration": 30
+    },
+    {
+      "id": "lunch",
+      "label": "Lunch",
+      "category": "breaks",
+      "image": "assets/visuals/lunch.svg",
+      "color": "#c88d32",
+      "defaultDuration": 60,
+      "isBreak": true
+    },
+    {
+      "id": "recess",
+      "label": "Recess",
+      "category": "breaks",
+      "image": "assets/visuals/recess.svg",
+      "color": "#daa54d",
+      "defaultDuration": 15,
+      "isBreak": true
+    },
+    {
+      "id": "preferred",
+      "label": "Preferred Activities",
+      "category": "breaks",
+      "image": "assets/visuals/preferred.svg",
+      "color": "#e6b85a",
+      "defaultDuration": 30,
+      "isBreak": true
+    },
+    {
+      "id": "gym",
+      "label": "Gym",
+      "category": "specials",
+      "image": "assets/visuals/gym.svg",
+      "color": "#9A7D6F",
+      "defaultDuration": 45
+    },
+    {
+      "id": "art",
+      "label": "Art",
+      "category": "specials",
+      "image": "assets/visuals/art.svg",
+      "color": "#b39789",
+      "defaultDuration": 45
+    }
+  ],
+  "customIcons": [
+    {
+      "id": "custom-star",
+      "label": "Star",
+      "image": "assets/visuals/custom-star.svg"
+    },
+    {
+      "id": "custom-heart",
+      "label": "Heart",
+      "image": "assets/visuals/custom-heart.svg"
+    },
+    {
+      "id": "custom-flag",
+      "label": "Flag",
+      "image": "assets/visuals/custom-flag.svg"
+    },
+    {
+      "id": "custom-circle",
+      "label": "Circle",
+      "image": "assets/visuals/custom-circle.svg"
+    },
+    {
+      "id": "custom-lightning",
+      "label": "Lightning",
+      "image": "assets/visuals/custom-lightning.svg"
+    },
+    {
+      "id": "custom-music",
+      "label": "Music",
+      "image": "assets/visuals/custom-music.svg"
+    }
+  ],
+  "defaults": {
+    "schoolDayStart": "09:00",
+    "schoolDayEnd": "15:30",
+    "defaultBlockDuration": 30,
+    "timeIncrement": 15,
+    "dragIncrement": 15
+  }
+}

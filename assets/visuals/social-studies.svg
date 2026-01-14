@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <!-- Social Studies - Globe/World -->
+  <circle cx="40" cy="40" r="24" fill="currentColor" fill-opacity="0.15"/>
+  <circle cx="40" cy="40" r="24" stroke="currentColor" stroke-width="3" fill="none"/>
+  <!-- Globe lines -->
+  <ellipse cx="40" cy="40" rx="24" ry="10" stroke="currentColor" stroke-width="2" fill="none"/>
+  <ellipse cx="40" cy="40" rx="10" ry="24" stroke="currentColor" stroke-width="2" fill="none"/>
+  <line x1="16" y1="40" x2="64" y2="40" stroke="currentColor" stroke-width="2"/>
+  <!-- Land masses (simplified) -->
+  <path d="M28 30C32 28 38 30 42 28C46 26 50 30 52 34" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M26 44C30 46 34 44 38 48C42 52 48 50 54 48" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <!-- Stand -->
+  <path d="M40 64V68" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+  <path d="M30 70H50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+</svg>

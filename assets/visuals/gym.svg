@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <!-- Gym - Running figure -->
+  <circle cx="40" cy="18" r="8" fill="currentColor"/>
+  <!-- Body -->
+  <path d="M40 26V42" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+  <!-- Arms running -->
+  <path d="M28 32L40 38L52 30" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Legs running -->
+  <path d="M40 42L30 58" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+  <path d="M40 42L54 54" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+  <!-- Motion lines -->
+  <path d="M18 36H24" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M16 42H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M18 48H24" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+</svg>

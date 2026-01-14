@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <!-- Preferred Activities - Star/Choice -->
+  <circle cx="40" cy="40" r="26" fill="currentColor" fill-opacity="0.1"/>
+  <!-- Star -->
+  <path d="M40 14L46 30H64L50 40L56 56L40 46L24 56L30 40L16 30H34L40 14Z" fill="currentColor" fill-opacity="0.3" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Inner star highlight -->
+  <path d="M40 22L44 32H54L46 38L50 48L40 42L30 48L34 38L26 32H36L40 22Z" fill="currentColor" fill-opacity="0.2"/>
+</svg>

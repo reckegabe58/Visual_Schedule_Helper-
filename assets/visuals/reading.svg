@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <!-- Reading - Open book -->
+  <path d="M40 20C32 20 24 22 18 26V58C24 54 32 52 40 52C48 52 56 54 62 58V26C56 22 48 20 40 20Z" fill="currentColor" fill-opacity="0.15"/>
+  <!-- Left page -->
+  <path d="M18 26C24 22 32 20 40 20V52C32 52 24 54 18 58V26Z" fill="currentColor" fill-opacity="0.25"/>
+  <!-- Right page -->
+  <path d="M62 26C56 22 48 20 40 20V52C48 52 56 54 62 58V26Z" fill="currentColor" fill-opacity="0.35"/>
+  <!-- Spine -->
+  <rect x="38" y="18" width="4" height="38" rx="2" fill="currentColor"/>
+  <!-- Text lines left -->
+  <rect x="22" y="30" width="12" height="2" rx="1" fill="currentColor" fill-opacity="0.5"/>
+  <rect x="22" y="36" width="10" height="2" rx="1" fill="currentColor" fill-opacity="0.5"/>
+  <rect x="22" y="42" width="12" height="2" rx="1" fill="currentColor" fill-opacity="0.5"/>
+  <!-- Text lines right -->
+  <rect x="46" y="30" width="12" height="2" rx="1" fill="currentColor" fill-opacity="0.5"/>
+  <rect x="46" y="36" width="10" height="2" rx="1" fill="currentColor" fill-opacity="0.5"/>
+  <rect x="46" y="42" width="12" height="2" rx="1" fill="currentColor" fill-opacity="0.5"/>
+</svg>

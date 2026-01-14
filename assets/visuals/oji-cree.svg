@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <!-- Oji-Cree Language - Speech/Feather -->
+  <circle cx="40" cy="36" r="20" fill="currentColor" fill-opacity="0.15"/>
+  <!-- Speech bubble -->
+  <path d="M20 36C20 25 29 16 40 16C51 16 60 25 60 36C60 47 51 52 40 52C36 52 30 58 28 62C28 56 20 47 20 36Z" fill="currentColor" fill-opacity="0.25" stroke="currentColor" stroke-width="3"/>
+  <!-- Feather inside -->
+  <path d="M40 24V46" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M34 28C34 28 40 32 40 32C40 32 46 28 46 28" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <path d="M32 34C32 34 40 40 40 40C40 40 48 34 48 34" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+</svg>
