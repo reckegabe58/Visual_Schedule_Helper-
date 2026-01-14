@@ -94,11 +94,10 @@ function renderDisplayBlock(block, index) {
     const imageSrc = icon?.image || card?.image || '';
     const isBreak = card?.isBreak || false;
 
-    // Format time display
-    let timeDisplay = '';
-    if (block.startTime && block.endTime) {
-        timeDisplay = `${ScheduleData.formatTime(block.startTime)} — ${ScheduleData.formatTime(block.endTime)}`;
-    }
+    // Format time display - this is now the primary identifier (not index number)
+    const startTimeStr = block.startTime ? ScheduleData.formatTime(block.startTime) : '';
+    const endTimeStr = block.endTime ? ScheduleData.formatTime(block.endTime) : '';
+    const timeRangeDisplay = startTimeStr && endTimeStr ? `${startTimeStr} - ${endTimeStr}` : '';
 
     return `
         <div class="display-block ${isBreak ? 'is-break' : ''}"
@@ -106,7 +105,9 @@ function renderDisplayBlock(block, index) {
              data-index="${index}"
              style="--block-color: ${color}">
 
-            <div class="display-block-order">${index + 1}</div>
+            <div class="display-block-time-badge">
+                ${timeRangeDisplay || `Block ${index + 1}`}
+            </div>
 
             <div class="display-block-icon" style="background-color: ${color}20; color: ${color}">
                 ${imageSrc ? `<img src="${imageSrc}" alt="${block.label}" style="color: ${color}">` : ''}
@@ -114,14 +115,10 @@ function renderDisplayBlock(block, index) {
 
             <div class="display-block-content">
                 <div class="display-block-label">${escapeHtml(block.label)}</div>
-                <div class="display-block-time">
-                    ${timeDisplay ? `
-                        <span class="material-symbols-outlined">schedule</span>
-                        <span>${timeDisplay}</span>
-                        <span class="display-block-duration">${block.duration} min</span>
-                    ` : `
-                        <span class="display-block-duration">${block.duration} min</span>
-                    `}
+                ${block.notes ? `<div class="display-block-notes">${escapeHtml(block.notes)}</div>` : ''}
+                <div class="display-block-duration">
+                    <span class="material-symbols-outlined">schedule</span>
+                    <span>${block.duration} min</span>
                 </div>
             </div>
 
@@ -217,7 +214,7 @@ function startHighlightTimer() {
 function setupDisplayHandlers() {
     // Back to builder button
     document.getElementById('back-to-builder')?.addEventListener('click', () => {
-        window.location.href = `schedule.html?date=${ScheduleData.getDateKey(displayDate)}`;
+        window.location.href = `visualschedule.html?date=${ScheduleData.getDateKey(displayDate)}`;
     });
 
     // Fullscreen toggle
@@ -279,7 +276,7 @@ function handleKeyboard(e) {
             if (document.fullscreenElement) {
                 toggleFullscreen();
             } else {
-                window.location.href = `schedule.html?date=${ScheduleData.getDateKey(displayDate)}`;
+                window.location.href = `visualschedule.html?date=${ScheduleData.getDateKey(displayDate)}`;
             }
             break;
         case 'ArrowLeft':

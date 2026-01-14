@@ -157,11 +157,11 @@
     opacity: 0.92;
 }
 
-/* ===== Block Order Number ===== */
-.display-block-order {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
+/* ===== Block Time Badge (replaces order number) ===== */
+.display-block-time-badge {
+    min-width: 140px;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
     background: linear-gradient(145deg,
         color-mix(in srgb, var(--block-color, var(--color-primary)) 15%, var(--color-bg-base)) 0%,
         color-mix(in srgb, var(--block-color, var(--color-primary)) 25%, var(--color-bg-base)) 100%);
@@ -169,17 +169,19 @@
     align-items: center;
     justify-content: center;
     font-family: var(--font-display);
-    font-size: var(--text-2xl);
-    font-weight: 900;
-    color: var(--block-color, var(--color-text-muted));
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--block-color, var(--color-text-primary));
     flex-shrink: 0;
     box-shadow:
         inset 0 2px 4px rgba(255, 255, 255, 0.2),
         0 2px 8px color-mix(in srgb, var(--block-color, var(--color-primary)) 15%, transparent);
     transition: all 0.3s ease;
+    text-align: center;
+    white-space: nowrap;
 }
 
-.display-block.is-current .display-block-order {
+.display-block.is-current .display-block-time-badge {
     background: linear-gradient(145deg,
         var(--block-color, var(--color-primary)) 0%,
         color-mix(in srgb, var(--block-color, var(--color-primary)) 80%, black) 100%);
@@ -187,7 +189,7 @@
     box-shadow:
         inset 0 2px 4px rgba(255, 255, 255, 0.3),
         0 4px 16px color-mix(in srgb, var(--block-color, var(--color-primary)) 40%, transparent);
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 /* ===== Block Icon ===== */
@@ -256,6 +258,13 @@
     font-size: 24px;
 }
 
+.display-block-notes {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-2);
+    font-style: italic;
+}
+
 .display-block-duration {
     display: inline-flex;
     align-items: center;
@@ -265,7 +274,10 @@
     border-radius: var(--radius-md);
     font-size: var(--text-base);
     color: var(--color-text-muted);
-    margin-left: var(--space-3);
+}
+
+.display-block-duration .material-symbols-outlined {
+    font-size: 16px;
 }
 
 /* ===== Current Indicator ===== */
@@ -362,10 +374,10 @@
     font-size: var(--text-2xl);
 }
 
-.display-mode.fullscreen .display-block-order {
-    width: 48px;
-    height: 48px;
-    font-size: var(--text-xl);
+.display-mode.fullscreen .display-block-time-badge {
+    min-width: 100px;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-base);
 }
 
 /* ===== Large Display Mode (for projector) ===== */
@@ -455,12 +467,12 @@
         var(--shadow-xl);
 }
 
-.display-block.is-break .display-block-order {
+.display-block.is-break .display-block-time-badge {
     background: var(--color-ochre-10);
     color: var(--color-ochre);
 }
 
-.display-block.is-break.is-current .display-block-order {
+.display-block.is-break.is-current .display-block-time-badge {
     background: var(--color-ochre);
     color: white;
 }
