@@ -48,6 +48,10 @@ async function initScheduleBuilder() {
 
     // Start current block highlight timer
     startCurrentBlockTimer();
+
+    // Prevent default drag behavior on the page for smoother UX
+    document.addEventListener('dragover', (e) => e.preventDefault());
+    document.addEventListener('drop', (e) => e.preventDefault());
 }
 
 // ===== Date Picker =====
@@ -177,7 +181,7 @@ function renderSchedule() {
 
     if (scheduleBlocks.length === 0) {
         scheduleListEl.innerHTML = `
-            <div class="drop-zone" id="drop-zone">
+            <div class="drop-zone active-drop-zone" id="drop-zone">
                 <div class="empty-schedule">
                     <span class="material-symbols-outlined">calendar_add_on</span>
                     <h4>No blocks yet</h4>
@@ -187,8 +191,17 @@ function renderSchedule() {
         `;
         setupDropZone();
     } else {
-        scheduleListEl.innerHTML = scheduleBlocks.map((block, index) => renderScheduleBlock(block, index)).join('');
+        // Render blocks PLUS a drop zone at the bottom for easy adding
+        let html = scheduleBlocks.map((block, index) => renderScheduleBlock(block, index)).join('');
+        html += `
+            <div class="drop-zone bottom-drop-zone" id="bottom-drop-zone">
+                <span class="material-symbols-outlined">add_circle</span>
+                <span>Drop here to add block</span>
+            </div>
+        `;
+        scheduleListEl.innerHTML = html;
         setupBlockEvents();
+        setupBottomDropZone();
     }
 
     // Update block count
@@ -208,6 +221,10 @@ function renderScheduleBlock(block, index) {
     const imageSrc = icon?.image || card?.image || '';
     const isBreak = card?.isBreak || false;
     const isCurrent = isCurrentBlock(block);
+
+    // Format time for display
+    const startTimeStr = block.startTime ? ScheduleData.formatTime(block.startTime) : '--:--';
+    const endTimeStr = block.endTime ? ScheduleData.formatTime(block.endTime) : '--:--';
 
     return `
         <div class="schedule-block ${isBreak ? 'is-break' : ''} ${isCurrent ? 'is-current' : ''}"
@@ -229,7 +246,8 @@ function renderScheduleBlock(block, index) {
                        class="block-label-input"
                        value="${escapeHtml(block.label)}"
                        data-field="label"
-                       aria-label="Block label">
+                       placeholder="Enter activity name..."
+                       aria-label="Block label (click to edit)">
 
                 <div class="block-time-row">
                     <input type="time"
@@ -237,27 +255,19 @@ function renderScheduleBlock(block, index) {
                            value="${ScheduleData.timeTo24hString(block.startTime)}"
                            data-field="startTime"
                            aria-label="Start time">
-                    <span>—</span>
+                    <span class="time-separator">to</span>
                     <input type="time"
                            class="block-time-input"
                            value="${ScheduleData.timeTo24hString(block.endTime)}"
                            data-field="endTime"
                            aria-label="End time">
                     <div class="block-duration">
-                        <span class="material-symbols-outlined" style="font-size: 14px;">schedule</span>
                         <span>${block.duration} min</span>
                     </div>
                 </div>
 
-                <div class="duration-controls">
-                    <button class="duration-btn" data-adjust="-15">-15</button>
-                    <button class="duration-btn" data-adjust="-5">-5</button>
-                    <button class="duration-btn" data-adjust="+5">+5</button>
-                    <button class="duration-btn" data-adjust="+15">+15</button>
-                </div>
-
                 <textarea class="block-notes-input"
-                          placeholder="Add notes..."
+                          placeholder="Add notes for students..."
                           data-field="notes"
                           rows="1"
                           aria-label="Notes">${escapeHtml(block.notes || '')}</textarea>
@@ -271,8 +281,6 @@ function renderScheduleBlock(block, index) {
                     <span class="material-symbols-outlined">delete</span>
                 </button>
             </div>
-
-            <div class="block-resize-handle" title="Drag to resize"></div>
         </div>
     `;
 }
@@ -323,7 +331,7 @@ function setupLibraryDragEvents() {
 
 function setupBlockEvents() {
     document.querySelectorAll('.schedule-block').forEach(block => {
-        // Drag events
+        // Drag events - use event capturing for more responsive handling
         block.addEventListener('dragstart', handleBlockDragStart);
         block.addEventListener('dragend', handleDragEnd);
         block.addEventListener('dragover', handleBlockDragOver);
@@ -336,19 +344,41 @@ function setupBlockEvents() {
             input.addEventListener('blur', handleBlockInputChange);
         });
 
-        // Duration buttons
-        block.querySelectorAll('.duration-btn').forEach(btn => {
-            btn.addEventListener('click', handleDurationAdjust);
-        });
-
         // Action buttons
         block.querySelector('.block-action-btn.duplicate')?.addEventListener('click', handleDuplicateBlock);
         block.querySelector('.block-action-btn.delete')?.addEventListener('click', handleDeleteBlock);
+    });
+}
 
-        // Resize handle
-        const resizeHandle = block.querySelector('.block-resize-handle');
-        if (resizeHandle) {
-            resizeHandle.addEventListener('mousedown', handleResizeStart);
+function setupBottomDropZone() {
+    const bottomZone = document.getElementById('bottom-drop-zone');
+    if (!bottomZone) return;
+
+    bottomZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (draggedItem) {
+            bottomZone.classList.add('drag-over');
+        }
+    });
+
+    bottomZone.addEventListener('dragleave', (e) => {
+        bottomZone.classList.remove('drag-over');
+    });
+
+    bottomZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        bottomZone.classList.remove('drag-over');
+
+        if (!draggedItem) return;
+
+        if (draggedFromLibrary) {
+            // Add new block at end
+            addBlockFromLibrary(draggedItem, scheduleBlocks.length);
+        } else if (draggedItem.blockId) {
+            // Move existing block to end
+            reorderBlock(draggedItem.blockId, scheduleBlocks.length);
         }
     });
 }
@@ -380,24 +410,39 @@ function setupDragAndDrop() {
 
 function handleLibraryDragStart(e) {
     draggedFromLibrary = true;
+    const card = e.target.closest('.visual-card');
     draggedItem = {
-        cardId: e.target.dataset.cardId,
-        customCardId: e.target.dataset.customCardId
+        cardId: card?.dataset.cardId,
+        customCardId: card?.dataset.customCardId
     };
-    e.target.classList.add('dragging');
+    card?.classList.add('dragging');
     e.dataTransfer.effectAllowed = 'copy';
+    e.dataTransfer.setData('text/plain', 'card'); // Required for Firefox
 }
 
 function handleBlockDragStart(e) {
+    // Don't start drag if clicking on inputs
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+        e.preventDefault();
+        return;
+    }
+
     draggedFromLibrary = false;
-    const blockId = e.target.closest('.schedule-block').dataset.blockId;
+    const blockEl = e.target.closest('.schedule-block');
+    if (!blockEl) return;
+
+    const blockId = blockEl.dataset.blockId;
     draggedItem = { blockId };
-    e.target.classList.add('dragging');
+    blockEl.classList.add('dragging');
     e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', 'block'); // Required for Firefox
 }
 
 function handleDragEnd(e) {
-    e.target.classList.remove('dragging');
+    // Clear all dragging states
+    document.querySelectorAll('.dragging').forEach(el => {
+        el.classList.remove('dragging');
+    });
     document.querySelectorAll('.drag-over, .drag-over-top, .drag-over-bottom').forEach(el => {
         el.classList.remove('drag-over', 'drag-over-top', 'drag-over-bottom');
     });
@@ -407,6 +452,8 @@ function handleDragEnd(e) {
 
 function handleBlockDragOver(e) {
     e.preventDefault();
+    e.stopPropagation();
+
     if (!draggedItem) return;
 
     const blockEl = e.target.closest('.schedule-block');
@@ -416,10 +463,20 @@ function handleBlockDragOver(e) {
     if (!draggedFromLibrary && blockEl.dataset.blockId === draggedItem.blockId) return;
 
     const rect = blockEl.getBoundingClientRect();
-    const midY = rect.top + rect.height / 2;
+    const offsetY = e.clientY - rect.top;
+    const threshold = rect.height * 0.5;
+
+    // Clear previous states from all blocks first
+    document.querySelectorAll('.schedule-block').forEach(b => {
+        if (b !== blockEl) {
+            b.classList.remove('drag-over-top', 'drag-over-bottom');
+        }
+    });
 
     blockEl.classList.remove('drag-over-top', 'drag-over-bottom');
-    if (e.clientY < midY) {
+
+    // Always default to adding BELOW the block (more intuitive)
+    if (offsetY < threshold) {
         blockEl.classList.add('drag-over-top');
     } else {
         blockEl.classList.add('drag-over-bottom');
@@ -427,14 +484,17 @@ function handleBlockDragOver(e) {
 }
 
 function handleBlockDragLeave(e) {
+    // Only remove if actually leaving the block (not entering a child)
     const blockEl = e.target.closest('.schedule-block');
-    if (blockEl) {
+    if (blockEl && !blockEl.contains(e.relatedTarget)) {
         blockEl.classList.remove('drag-over-top', 'drag-over-bottom');
     }
 }
 
 function handleBlockDrop(e) {
     e.preventDefault();
+    e.stopPropagation();
+
     if (!draggedItem) return;
 
     const targetBlockEl = e.target.closest('.schedule-block');
@@ -442,8 +502,16 @@ function handleBlockDrop(e) {
 
     const targetIndex = parseInt(targetBlockEl.dataset.index, 10);
     const rect = targetBlockEl.getBoundingClientRect();
-    const insertAfter = e.clientY > rect.top + rect.height / 2;
-    const insertIndex = insertAfter ? targetIndex + 1 : targetIndex;
+    const offsetY = e.clientY - rect.top;
+    const threshold = rect.height * 0.5;
+
+    // Determine insert position - below by default for intuitive UX
+    let insertIndex;
+    if (offsetY < threshold) {
+        insertIndex = targetIndex; // Insert above (at this index)
+    } else {
+        insertIndex = targetIndex + 1; // Insert below (after this index)
+    }
 
     if (draggedFromLibrary) {
         // Add new block from library
@@ -453,6 +521,7 @@ function handleBlockDrop(e) {
         reorderBlock(draggedItem.blockId, insertIndex);
     }
 
+    // Clear visual states
     targetBlockEl.classList.remove('drag-over-top', 'drag-over-bottom');
 }
 
@@ -485,23 +554,45 @@ function addBlockFromLibrary(item, insertIndex) {
 
     if (!newBlock) return;
 
-    // Calculate times based on position
-    if (scheduleBlocks.length > 0 && insertIndex > 0) {
-        const prevBlock = scheduleBlocks[insertIndex - 1];
-        if (prevBlock.endTime) {
-            newBlock.startTime = { ...prevBlock.endTime };
-            newBlock.endTime = ScheduleData.calculateEndTime(newBlock.startTime, newBlock.duration);
-        }
-    } else if (scheduleBlocks.length === 0) {
-        // First block starts at school start
+    // ALWAYS calculate times based on position for seamless experience
+    if (scheduleBlocks.length === 0) {
+        // First block starts at school start (9:00 AM)
         newBlock.startTime = { ...ScheduleData.TIME_CONFIG.SCHOOL_START };
         newBlock.endTime = ScheduleData.calculateEndTime(newBlock.startTime, newBlock.duration);
+    } else if (insertIndex === 0) {
+        // Inserting at the beginning - start at school start
+        newBlock.startTime = { ...ScheduleData.TIME_CONFIG.SCHOOL_START };
+        newBlock.endTime = ScheduleData.calculateEndTime(newBlock.startTime, newBlock.duration);
+    } else {
+        // Get the block before the insert position
+        const prevBlock = scheduleBlocks[insertIndex - 1];
+        if (prevBlock && prevBlock.endTime) {
+            // Start where the previous block ends
+            newBlock.startTime = { ...prevBlock.endTime };
+            newBlock.endTime = ScheduleData.calculateEndTime(newBlock.startTime, newBlock.duration);
+        } else if (prevBlock && prevBlock.startTime) {
+            // If no end time, calculate from start + duration
+            newBlock.startTime = ScheduleData.calculateEndTime(prevBlock.startTime, prevBlock.duration);
+            newBlock.endTime = ScheduleData.calculateEndTime(newBlock.startTime, newBlock.duration);
+        } else {
+            // Fallback: calculate from school start + all previous durations
+            let totalMinutes = ScheduleData.TIME_CONFIG.SCHOOL_START.hours * 60 + ScheduleData.TIME_CONFIG.SCHOOL_START.minutes;
+            for (let i = 0; i < insertIndex; i++) {
+                totalMinutes += scheduleBlocks[i].duration || 30;
+            }
+            newBlock.startTime = {
+                hours: Math.floor(totalMinutes / 60),
+                minutes: totalMinutes % 60
+            };
+            newBlock.endTime = ScheduleData.calculateEndTime(newBlock.startTime, newBlock.duration);
+        }
     }
 
-    // Insert block
+    // Insert block at the specified position
     scheduleBlocks.splice(insertIndex, 0, newBlock);
 
-    // Check for auto-merge
+    // Auto-adjust times for blocks AFTER the inserted one (optional - keep times sequential)
+    // We only auto-merge if same subject, otherwise keep times as is
     const settings = ScheduleData.loadSettings();
     if (settings.autoMerge) {
         scheduleBlocks = ScheduleData.autoMergeSchedule(scheduleBlocks);
@@ -577,6 +668,7 @@ function handleDurationAdjust(e) {
 }
 
 function handleDuplicateBlock(e) {
+    e.stopPropagation();
     const blockEl = e.target.closest('.schedule-block');
     const blockId = blockEl.dataset.blockId;
     const index = parseInt(blockEl.dataset.index, 10);
@@ -590,9 +682,9 @@ function handleDuplicateBlock(e) {
         createdAt: Date.now()
     };
 
-    // Adjust times if present
-    if (duplicate.startTime && duplicate.endTime) {
-        duplicate.startTime = { ...duplicate.endTime };
+    // Set times to continue from the original block
+    if (block.endTime) {
+        duplicate.startTime = { ...block.endTime };
         duplicate.endTime = ScheduleData.calculateEndTime(duplicate.startTime, duplicate.duration);
     }
 
@@ -602,6 +694,7 @@ function handleDuplicateBlock(e) {
 }
 
 function handleDeleteBlock(e) {
+    e.stopPropagation();
     const blockEl = e.target.closest('.schedule-block');
     const blockId = blockEl.dataset.blockId;
 

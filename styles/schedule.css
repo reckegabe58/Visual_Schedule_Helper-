@@ -434,6 +434,47 @@
     opacity: 0.5;
 }
 
+/* Bottom drop zone - always visible for easy adding */
+.bottom-drop-zone {
+    min-height: 80px;
+    margin-top: var(--space-2);
+    gap: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    cursor: pointer;
+    background: var(--color-bg-elevated);
+}
+
+.bottom-drop-zone .material-symbols-outlined {
+    font-size: 28px;
+    color: var(--color-primary);
+    opacity: 0.6;
+    transition: all var(--transition-fast);
+}
+
+.bottom-drop-zone:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary-10);
+}
+
+.bottom-drop-zone:hover .material-symbols-outlined {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.bottom-drop-zone.drag-over {
+    border-color: var(--color-primary);
+    background: var(--color-primary-10);
+    border-style: solid;
+}
+
+.bottom-drop-zone.drag-over .material-symbols-outlined {
+    opacity: 1;
+    color: var(--color-primary);
+    transform: scale(1.2);
+}
+
 /* ===== Schedule Block (in list) ===== */
 .schedule-block {
     display: flex;
