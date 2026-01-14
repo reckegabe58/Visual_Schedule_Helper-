@@ -689,7 +689,7 @@ function setupToolbarActions() {
     document.getElementById('copy-template')?.addEventListener('click', openTemplateModal);
 
     document.getElementById('display-mode')?.addEventListener('click', () => {
-        window.location.href = `schedule.html?date=${ScheduleData.getDateKey(currentDate)}&mode=display`;
+        window.location.href = `display.html?date=${ScheduleData.getDateKey(currentDate)}`;
     });
 }
 

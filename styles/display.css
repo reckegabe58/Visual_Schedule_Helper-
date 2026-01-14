@@ -1,0 +1,421 @@
+/* ===========================================
+   Student Display Mode Styles
+   Large visuals, minimal clutter, high contrast
+   Optimized for smartboard/projector viewing
+   =========================================== */
+
+/* ===== Display Mode Container ===== */
+.display-mode {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--color-bg-base) 0%, var(--color-bg-elevated) 100%);
+    padding: var(--space-6);
+}
+
+.display-mode.fullscreen {
+    padding: var(--space-4);
+}
+
+/* ===== Display Header ===== */
+.display-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-6);
+    background: var(--color-bg-surface);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--space-6);
+}
+
+.display-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.display-title h1 {
+    font-size: var(--text-3xl);
+    font-weight: 900;
+}
+
+.display-date {
+    font-size: var(--text-xl);
+    color: var(--color-text-secondary);
+    font-weight: 600;
+}
+
+.display-clock {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.display-clock .material-symbols-outlined {
+    font-size: 36px;
+}
+
+.display-actions {
+    display: flex;
+    gap: var(--space-3);
+}
+
+/* ===== Schedule Display Grid ===== */
+.display-schedule {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+/* ===== Display Block ===== */
+.display-block {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    padding: var(--space-6);
+    background: var(--color-bg-surface);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    border-left: 8px solid var(--block-color, var(--color-primary));
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.display-block::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, var(--block-color) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+/* Current block - highly visible */
+.display-block.is-current {
+    transform: scale(1.02);
+    box-shadow:
+        0 0 0 4px var(--color-primary),
+        var(--shadow-xl);
+    background: linear-gradient(90deg, var(--color-primary-10) 0%, var(--color-bg-surface) 100%);
+}
+
+.display-block.is-current::before {
+    opacity: 0.05;
+}
+
+.display-block.is-current .display-block-time {
+    color: var(--color-primary);
+}
+
+/* Completed blocks - subtle */
+.display-block.is-completed {
+    opacity: 0.5;
+}
+
+.display-block.is-completed .display-block-icon {
+    filter: grayscale(50%);
+}
+
+/* Upcoming blocks - normal */
+.display-block.is-upcoming {
+    opacity: 0.9;
+}
+
+/* ===== Block Order Number ===== */
+.display-block-order {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--color-bg-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 900;
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+}
+
+.display-block.is-current .display-block-order {
+    background: var(--color-primary);
+    color: white;
+    box-shadow: var(--shadow-primary);
+}
+
+/* ===== Block Icon ===== */
+.display-block-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4);
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.display-block.is-current .display-block-icon {
+    transform: scale(1.1);
+}
+
+.display-block-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* ===== Block Content ===== */
+.display-block-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.display-block-label {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+    line-height: 1.2;
+}
+
+.display-block.is-current .display-block-label {
+    color: var(--color-primary-dark);
+}
+
+.display-block-time {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.display-block-time .material-symbols-outlined {
+    font-size: 24px;
+}
+
+.display-block-duration {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-bg-base);
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+    margin-left: var(--space-3);
+}
+
+/* ===== Current Indicator ===== */
+.current-indicator {
+    display: none;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-primary);
+    color: white;
+    border-radius: var(--radius-full);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.display-block.is-current .current-indicator {
+    display: flex;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+/* ===== Progress Bar ===== */
+.display-block-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 6px;
+    background: var(--color-primary);
+    border-radius: 0 3px 3px 0;
+    transition: width 1s linear;
+}
+
+/* ===== Empty State ===== */
+.display-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+    padding: var(--space-12);
+}
+
+.display-empty .material-symbols-outlined {
+    font-size: 120px;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-6);
+}
+
+.display-empty h2 {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-4);
+}
+
+.display-empty p {
+    font-size: var(--text-xl);
+    max-width: 480px;
+}
+
+/* ===== Fullscreen Mode ===== */
+.display-mode.fullscreen .display-header {
+    padding: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+.display-mode.fullscreen .display-title h1 {
+    font-size: var(--text-2xl);
+}
+
+.display-mode.fullscreen .display-block {
+    padding: var(--space-4);
+    gap: var(--space-4);
+}
+
+.display-mode.fullscreen .display-block-icon {
+    width: 80px;
+    height: 80px;
+}
+
+.display-mode.fullscreen .display-block-label {
+    font-size: var(--text-2xl);
+}
+
+.display-mode.fullscreen .display-block-order {
+    width: 48px;
+    height: 48px;
+    font-size: var(--text-xl);
+}
+
+/* ===== Large Display Mode (for projector) ===== */
+@media (min-width: 1200px) {
+    .display-block-icon {
+        width: 120px;
+        height: 120px;
+    }
+
+    .display-block-label {
+        font-size: var(--text-4xl);
+    }
+
+    .display-block-time {
+        font-size: var(--text-2xl);
+    }
+
+    .display-clock {
+        font-size: var(--text-5xl);
+    }
+}
+
+/* ===== Print Styles ===== */
+@media print {
+    .display-mode {
+        background: white;
+        padding: 0;
+    }
+
+    .display-header {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+
+    .display-actions {
+        display: none;
+    }
+
+    .display-block {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        break-inside: avoid;
+    }
+
+    .display-block.is-current {
+        box-shadow: none;
+        border: 3px solid var(--color-primary);
+    }
+}
+
+/* ===== Animations ===== */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.display-block {
+    animation: slideIn 0.5s ease forwards;
+}
+
+.display-block:nth-child(1) { animation-delay: 0.05s; }
+.display-block:nth-child(2) { animation-delay: 0.1s; }
+.display-block:nth-child(3) { animation-delay: 0.15s; }
+.display-block:nth-child(4) { animation-delay: 0.2s; }
+.display-block:nth-child(5) { animation-delay: 0.25s; }
+.display-block:nth-child(6) { animation-delay: 0.3s; }
+.display-block:nth-child(7) { animation-delay: 0.35s; }
+.display-block:nth-child(8) { animation-delay: 0.4s; }
+.display-block:nth-child(9) { animation-delay: 0.45s; }
+.display-block:nth-child(10) { animation-delay: 0.5s; }
+
+/* ===== Break Blocks - Distinct Style ===== */
+.display-block.is-break {
+    border-left-color: var(--color-ochre);
+    background: linear-gradient(90deg, var(--color-ochre-10) 0%, var(--color-bg-surface) 30%);
+}
+
+.display-block.is-break.is-current {
+    box-shadow:
+        0 0 0 4px var(--color-ochre),
+        var(--shadow-xl);
+}
+
+.display-block.is-break .display-block-order {
+    background: var(--color-ochre-10);
+    color: var(--color-ochre);
+}
+
+.display-block.is-break.is-current .display-block-order {
+    background: var(--color-ochre);
+    color: white;
+}
+
+.display-block.is-break .current-indicator {
+    background: var(--color-ochre);
+}

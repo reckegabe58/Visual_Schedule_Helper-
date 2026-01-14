@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Schedule - Learning Circle</title>
+    <meta name="description" content="Student view of today's schedule">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/display.css">
+
+    <style>
+        /* Additional display-specific adjustments */
+        body {
+            background: var(--color-bg-base);
+        }
+    </style>
+</head>
+<body>
+    <div class="display-mode">
+        <!-- Display Header -->
+        <header class="display-header">
+            <div class="display-title">
+                <div class="site-logo-icon" style="width: 48px; height: 48px;">
+                    <span class="material-symbols-outlined" style="font-size: 28px;">nature_people</span>
+                </div>
+                <div>
+                    <h1>Today's Journey</h1>
+                    <div class="display-date" id="display-date-label">Loading...</div>
+                </div>
+            </div>
+
+            <div class="display-clock">
+                <span class="material-symbols-outlined">schedule</span>
+                <span id="display-clock-time">--:--</span>
+            </div>
+
+            <div class="display-actions">
+                <button class="btn btn-ghost" id="display-prev-day" title="Previous day (←)">
+                    <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                <button class="btn btn-ghost" id="display-next-day" title="Next day (→)">
+                    <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+                <button class="btn btn-secondary" id="toggle-fullscreen" title="Fullscreen (F)">
+                    <span class="material-symbols-outlined">fullscreen</span>
+                    <span>Fullscreen</span>
+                </button>
+                <button class="btn btn-secondary" id="print-schedule" title="Print (P)">
+                    <span class="material-symbols-outlined">print</span>
+                    <span>Print</span>
+                </button>
+                <button class="btn btn-primary" id="back-to-builder" title="Edit mode (Esc)">
+                    <span class="material-symbols-outlined">edit</span>
+                    <span>Edit</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Schedule Display -->
+        <main id="display-schedule" class="display-schedule">
+            <!-- Schedule blocks populated by JS -->
+        </main>
+
+        <!-- Keyboard shortcuts hint (shown briefly) -->
+        <div class="keyboard-hints" style="
+            position: fixed;
+            bottom: var(--space-4);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: var(--space-4);
+            padding: var(--space-2) var(--space-4);
+            background: var(--color-bg-surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            font-size: var(--text-xs);
+            color: var(--color-text-muted);
+            opacity: 0.8;
+        ">
+            <span><kbd style="background: var(--color-bg-base); padding: 2px 6px; border-radius: 4px; font-family: var(--font-display);">F</kbd> Fullscreen</span>
+            <span><kbd style="background: var(--color-bg-base); padding: 2px 6px; border-radius: 4px; font-family: var(--font-display);">←</kbd><kbd style="background: var(--color-bg-base); padding: 2px 6px; border-radius: 4px; font-family: var(--font-display);">→</kbd> Navigate days</span>
+            <span><kbd style="background: var(--color-bg-base); padding: 2px 6px; border-radius: 4px; font-family: var(--font-display);">P</kbd> Print</span>
+            <span><kbd style="background: var(--color-bg-base); padding: 2px 6px; border-radius: 4px; font-family: var(--font-display);">Esc</kbd> Back to edit</span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/main.js"></script>
+    <script src="scripts/schedule-data.js"></script>
+    <script src="scripts/schedule-display.js"></script>
+</body>
+</html>
