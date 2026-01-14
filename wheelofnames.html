@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheel of Names - Teacher Tools</title>
+    <meta name="description" content="Random student picker wheel for classroom activities">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/wheel.css">
+</head>
+<body>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="site-logo">
+                <div class="site-logo-icon">
+                    <span class="material-symbols-outlined">handyman</span>
+                </div>
+                <div class="site-logo-text">
+                    <span class="site-logo-name">Teacher Tools</span>
+                    <span class="site-logo-subtitle">Classroom Resources</span>
+                </div>
+            </a>
+
+            <nav class="main-nav" role="navigation" aria-label="Main navigation">
+                <a href="index.html" class="nav-link">Dashboard</a>
+                <a href="visualschedule.html" class="nav-link">Visual Schedule</a>
+                <a href="wheelofnames.html" class="nav-link active">Wheel of Names</a>
+            </nav>
+
+            <button class="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" role="navigation" aria-label="Mobile navigation">
+        <a href="index.html" class="nav-link">Dashboard</a>
+        <a href="visualschedule.html" class="nav-link">Visual Schedule</a>
+        <a href="wheelofnames.html" class="nav-link active">Wheel of Names</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="wheel-page-header">
+                <div>
+                    <h1 class="wheel-title">Wheel of Names</h1>
+                    <p class="wheel-subtitle">Click the wheel to pick a random student</p>
+                </div>
+                <div class="wheel-actions">
+                    <button class="btn btn-secondary" id="reset-wheel-btn">
+                        <span class="material-symbols-outlined">refresh</span>
+                        Reset
+                    </button>
+                    <button class="btn btn-secondary" id="settings-btn">
+                        <span class="material-symbols-outlined">settings</span>
+                        Settings
+                    </button>
+                </div>
+            </div>
+
+            <!-- Wheel Page Layout -->
+            <div class="wheel-page">
+                <!-- Student List Sidebar -->
+                <aside class="student-panel">
+                    <div class="panel-header">
+                        <h3>
+                            <span class="material-symbols-outlined">group</span>
+                            Students
+                        </h3>
+                        <span class="student-count" id="student-count">0 selected</span>
+                    </div>
+
+                    <div class="panel-actions">
+                        <button class="btn btn-sm btn-secondary" id="select-all-btn">Select All</button>
+                        <button class="btn btn-sm btn-secondary" id="deselect-all-btn">Deselect All</button>
+                    </div>
+
+                    <div class="student-list" id="student-list">
+                        <!-- Students populated by JS -->
+                    </div>
+
+                    <div class="add-student-section">
+                        <div class="add-student-input">
+                            <input type="text" id="new-student-input" placeholder="Add new student..." class="form-input">
+                            <button class="btn btn-primary btn-icon" id="add-student-btn">
+                                <span class="material-symbols-outlined">add</span>
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Wheel Area -->
+                <div class="wheel-container">
+                    <div class="wheel-wrapper" id="wheel-wrapper">
+                        <!-- Pointer -->
+                        <div class="wheel-pointer">
+                            <span class="material-symbols-outlined">arrow_drop_down</span>
+                        </div>
+
+                        <!-- The Wheel -->
+                        <div class="wheel" id="wheel" role="button" aria-label="Click to spin the wheel">
+                            <canvas id="wheel-canvas"></canvas>
+                            <div class="wheel-center">
+                                <span class="material-symbols-outlined">touch_app</span>
+                                <span>SPIN</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Winner Display -->
+                    <div class="winner-display" id="winner-display">
+                        <div class="winner-content">
+                            <span class="material-symbols-outlined">celebration</span>
+                            <h2 id="winner-name">-</h2>
+                            <p>is the winner!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal" role="dialog" aria-labelledby="settings-title">
+            <div class="modal-header">
+                <h3 id="settings-title">Wheel Settings</h3>
+                <button class="modal-close" aria-label="Close" id="close-settings">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="spin-duration">Spin Duration (seconds)</label>
+                    <input type="number" id="spin-duration" class="form-input" value="5" min="2" max="15">
+                </div>
+
+                <div class="form-group">
+                    <label>Sound Effects</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="sound-enabled" checked>
+                        <label for="sound-enabled">Enable spin sounds</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Remove Winner After Selection</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="remove-winner">
+                        <label for="remove-winner">Auto-remove selected student</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Manage Student List</label>
+                    <div class="manage-actions">
+                        <button class="btn btn-secondary" id="import-students-btn">
+                            <span class="material-symbols-outlined">upload</span>
+                            Import List
+                        </button>
+                        <button class="btn btn-secondary" id="export-students-btn">
+                            <span class="material-symbols-outlined">download</span>
+                            Export List
+                        </button>
+                        <button class="btn btn-secondary danger" id="clear-students-btn">
+                            <span class="material-symbols-outlined">delete</span>
+                            Clear All
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="save-settings-btn">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div class="modal-overlay" id="import-modal">
+        <div class="modal" role="dialog" aria-labelledby="import-title">
+            <div class="modal-header">
+                <h3 id="import-title">Import Students</h3>
+                <button class="modal-close" aria-label="Close" id="close-import">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="import-text">Paste student names (one per line)</label>
+                    <textarea id="import-text" class="form-input" rows="10" placeholder="John Smith
+Jane Doe
+Alex Johnson
+..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-import-btn">Cancel</button>
+                <button class="btn btn-primary" id="confirm-import-btn">Import Students</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="site-logo">
+                        <div class="site-logo-icon">
+                            <span class="material-symbols-outlined">handyman</span>
+                        </div>
+                        <span class="site-logo-name">Teacher Tools</span>
+                    </a>
+                    <p>Tools to make your teaching day easier.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Tools</h4>
+                    <ul class="footer-links">
+                        <li><a href="visualschedule.html">Visual Schedule</a></li>
+                        <li><a href="wheelofnames.html">Wheel of Names</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Teacher Tools. Built for educators.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="scripts/main.js"></script>
+    <script src="scripts/wheel.js"></script>
+</body>
+</html>
