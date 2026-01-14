@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Schedule - Learning Circle</title>
+    <meta name="description" content="Daily visual schedule builder for the classroom">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/schedule.css">
+</head>
+<body>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="site-logo">
+                <div class="site-logo-icon">
+                    <span class="material-symbols-outlined">nature_people</span>
+                </div>
+                <div class="site-logo-text">
+                    <span class="site-logo-name">Learning Circle</span>
+                    <span class="site-logo-subtitle">Grade 3/4 Classroom</span>
+                </div>
+            </a>
+
+            <nav class="main-nav" role="navigation" aria-label="Main navigation">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="schedule.html" class="nav-link active">Schedule</a>
+                <a href="resources.html" class="nav-link">Resources</a>
+                <a href="news.html" class="nav-link">News</a>
+            </nav>
+
+            <button class="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" role="navigation" aria-label="Mobile navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="schedule.html" class="nav-link active">Schedule</a>
+        <a href="resources.html" class="nav-link">Resources</a>
+        <a href="news.html" class="nav-link">News</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="schedule-header">
+                <div>
+                    <h1 class="schedule-title">Today's Journey</h1>
+                    <p class="schedule-date-info">
+                        <span class="material-symbols-outlined">calendar_today</span>
+                        <span id="date-label">Loading...</span>
+                    </p>
+                </div>
+
+                <div class="header-actions">
+                    <div class="date-picker-wrapper">
+                        <button class="date-nav-btn" id="prev-day" aria-label="Previous day">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <input type="date" id="date-picker" class="date-input" aria-label="Select date">
+                        <button class="date-nav-btn" id="next-day" aria-label="Next day">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </div>
+                    <button class="btn btn-secondary" id="today-btn">
+                        <span class="material-symbols-outlined">today</span>
+                        Today
+                    </button>
+                </div>
+            </div>
+
+            <!-- Schedule Page Layout -->
+            <div class="schedule-page">
+                <!-- Visual Library Sidebar -->
+                <aside class="visual-library" aria-label="Visual card library">
+                    <div class="library-header">
+                        <h3>
+                            <span class="material-symbols-outlined">dashboard</span>
+                            Card Library
+                        </h3>
+                    </div>
+                    <div class="library-content" id="library-content">
+                        <!-- Cards populated by JS -->
+                    </div>
+                </aside>
+
+                <!-- Schedule Builder -->
+                <div class="schedule-builder">
+                    <!-- Toolbar -->
+                    <div class="builder-toolbar">
+                        <div class="toolbar-group">
+                            <button class="btn btn-primary" id="display-mode">
+                                <span class="material-symbols-outlined">cast</span>
+                                Student View
+                            </button>
+                        </div>
+
+                        <div class="toolbar-divider"></div>
+
+                        <div class="toolbar-group">
+                            <button class="toolbar-btn" id="copy-template" title="Copy from another day">
+                                <span class="material-symbols-outlined">content_copy</span>
+                                <span>Copy Day</span>
+                            </button>
+                            <button class="toolbar-btn" id="normalize-times" title="Auto-chain block times">
+                                <span class="material-symbols-outlined">update</span>
+                                <span>Fix Times</span>
+                            </button>
+                        </div>
+
+                        <div class="toolbar-divider"></div>
+
+                        <div class="toolbar-group">
+                            <button class="toolbar-btn danger" id="clear-schedule" title="Clear all blocks">
+                                <span class="material-symbols-outlined">delete_sweep</span>
+                                <span>Clear</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Schedule List -->
+                    <div class="schedule-list">
+                        <div class="schedule-list-header">
+                            <h3>
+                                <span class="material-symbols-outlined">view_agenda</span>
+                                Schedule Blocks
+                            </h3>
+                            <span class="block-count" id="block-count">0 blocks</span>
+                        </div>
+                        <div id="schedule-blocks">
+                            <!-- Blocks populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="site-logo">
+                        <div class="site-logo-icon">
+                            <span class="material-symbols-outlined">school</span>
+                        </div>
+                        <span class="site-logo-name">Learning Circle</span>
+                    </a>
+                    <p>Building daily rhythms for our classroom community.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="schedule.html">Schedule</a></li>
+                        <li><a href="resources.html">Resources</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Tools</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" id="export-data-footer">Export Data</a></li>
+                        <li><a href="#" id="import-data-footer">Import Data</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Learning Circle Classroom. Made with care for students and families.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Card Modal -->
+    <div class="modal-overlay" id="custom-card-modal">
+        <div class="modal" role="dialog" aria-labelledby="custom-card-title">
+            <div class="modal-header">
+                <h3 id="custom-card-title">Create Custom Card</h3>
+                <button class="modal-close" aria-label="Close">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <form id="custom-card-form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="card-label">Card Name</label>
+                        <input type="text"
+                               id="card-label"
+                               name="label"
+                               class="form-input"
+                               placeholder="e.g., Assembly, Field Trip..."
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Choose an Icon (optional)</label>
+                        <div class="icon-picker">
+                            <!-- Icons populated by JS -->
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Choose a Color</label>
+                        <div class="color-picker">
+                            <!-- Colors populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ghost modal-close">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Card</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Template Modal -->
+    <div class="modal-overlay" id="template-modal">
+        <div class="modal" role="dialog" aria-labelledby="template-title">
+            <div class="modal-header">
+                <h3 id="template-title">Copy from Another Day</h3>
+                <button class="modal-close" aria-label="Close">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: var(--space-4); color: var(--color-text-secondary);">
+                    Select a previous day to copy its schedule:
+                </p>
+                <div class="template-list">
+                    <!-- Templates populated by JS -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ghost modal-close">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import/Export Modal -->
+    <div class="modal-overlay" id="import-export-modal">
+        <div class="modal" role="dialog" aria-labelledby="import-export-title">
+            <div class="modal-header">
+                <h3 id="import-export-title">Import / Export Data</h3>
+                <button class="modal-close" aria-label="Close">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Export Your Schedules</label>
+                    <p style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-bottom: var(--space-3);">
+                        Download all your schedules as a JSON file for backup or transfer.
+                    </p>
+                    <button type="button" class="btn btn-primary" id="export-btn">
+                        <span class="material-symbols-outlined">download</span>
+                        Export Data
+                    </button>
+                </div>
+
+                <hr style="border: none; border-top: 1px solid var(--color-border); margin: var(--space-6) 0;">
+
+                <div class="form-group">
+                    <label>Import Schedules</label>
+                    <p style="font-size: var(--text-sm); color: var(--color-text-secondary); margin-bottom: var(--space-3);">
+                        Restore schedules from a previously exported JSON file.
+                    </p>
+                    <input type="file" id="import-file" accept=".json" style="display: none;">
+                    <button type="button" class="btn btn-secondary" id="import-btn">
+                        <span class="material-symbols-outlined">upload</span>
+                        Import Data
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-ghost modal-close">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/main.js"></script>
+    <script src="scripts/schedule-data.js"></script>
+    <script src="scripts/schedule-builder.js"></script>
+    <script>
+        // Import/Export handlers
+        document.addEventListener('DOMContentLoaded', () => {
+            // Open import/export modal
+            document.getElementById('export-data-footer')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('import-export-modal').classList.add('open');
+            });
+
+            document.getElementById('import-data-footer')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('import-export-modal').classList.add('open');
+            });
+
+            // Export button
+            document.getElementById('export-btn')?.addEventListener('click', () => {
+                const data = ScheduleData.exportAllData();
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `classroom-schedules-${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                ClassroomApp.Toast.success('Data exported successfully');
+            });
+
+            // Import button
+            document.getElementById('import-btn')?.addEventListener('click', () => {
+                document.getElementById('import-file').click();
+            });
+
+            document.getElementById('import-file')?.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const data = JSON.parse(event.target.result);
+                        if (ScheduleData.importData(data)) {
+                            ClassroomApp.Toast.success('Data imported successfully');
+                            ScheduleBuilder.refresh();
+                            document.getElementById('import-export-modal').classList.remove('open');
+                        } else {
+                            ClassroomApp.Toast.error('Failed to import data');
+                        }
+                    } catch (err) {
+                        ClassroomApp.Toast.error('Invalid file format');
+                    }
+                };
+                reader.readAsText(file);
+            });
+        });
+    </script>
+</body>
+</html>
