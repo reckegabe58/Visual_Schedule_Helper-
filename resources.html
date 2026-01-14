@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources - Learning Circle</title>
+    <meta name="description" content="Classroom resources and learning materials">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/main.css">
+
+    <style>
+        .coming-soon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            text-align: center;
+            padding: var(--space-12);
+        }
+
+        .coming-soon .material-symbols-outlined {
+            font-size: 80px;
+            color: var(--color-primary);
+            margin-bottom: var(--space-6);
+            opacity: 0.6;
+        }
+
+        .coming-soon h1 {
+            font-size: var(--text-4xl);
+            margin-bottom: var(--space-4);
+        }
+
+        .coming-soon p {
+            font-size: var(--text-lg);
+            max-width: 480px;
+            margin-bottom: var(--space-8);
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="site-logo">
+                <div class="site-logo-icon">
+                    <span class="material-symbols-outlined">nature_people</span>
+                </div>
+                <div class="site-logo-text">
+                    <span class="site-logo-name">Learning Circle</span>
+                    <span class="site-logo-subtitle">Grade 3/4 Classroom</span>
+                </div>
+            </a>
+
+            <nav class="main-nav" role="navigation" aria-label="Main navigation">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="schedule.html" class="nav-link">Schedule</a>
+                <a href="resources.html" class="nav-link active">Resources</a>
+                <a href="news.html" class="nav-link">News</a>
+            </nav>
+
+            <button class="mobile-menu-btn" aria-label="Open menu" aria-expanded="false">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" role="navigation" aria-label="Mobile navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="schedule.html" class="nav-link">Schedule</a>
+        <a href="resources.html" class="nav-link active">Resources</a>
+        <a href="news.html" class="nav-link">News</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content">
+        <div class="container">
+            <div class="coming-soon">
+                <span class="material-symbols-outlined">folder_open</span>
+                <h1>Resources Coming Soon</h1>
+                <p>We're preparing helpful learning materials, links, and resources for students and families. Check back soon!</p>
+                <a href="index.html" class="btn btn-primary">
+                    <span class="material-symbols-outlined">home</span>
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="index.html" class="site-logo">
+                        <div class="site-logo-icon">
+                            <span class="material-symbols-outlined">school</span>
+                        </div>
+                        <span class="site-logo-name">Learning Circle</span>
+                    </a>
+                    <p>A collaborative learning community dedicated to fostering respect for all living things.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="schedule.html">Daily Schedule</a></li>
+                        <li><a href="resources.html">Resources</a></li>
+                        <li><a href="news.html">News</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>School Info</h4>
+                    <ul class="footer-links">
+                        <li>Grade 3/4 Classroom</li>
+                        <li>9:00 AM - 3:30 PM</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Learning Circle Classroom. Made with care for students and families.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="scripts/main.js"></script>
+</body>
+</html>
