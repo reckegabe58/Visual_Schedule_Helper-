@@ -324,6 +324,10 @@ function checkAndDisplayOverlaps() {
 // ===== Drag and Drop =====
 function setupLibraryDragEvents() {
     document.querySelectorAll('.visual-card[draggable="true"]').forEach(card => {
+        // Remove existing listeners first to prevent duplicates
+        card.removeEventListener('dragstart', handleLibraryDragStart);
+        card.removeEventListener('dragend', handleDragEnd);
+
         card.addEventListener('dragstart', handleLibraryDragStart);
         card.addEventListener('dragend', handleDragEnd);
     });
@@ -331,12 +335,9 @@ function setupLibraryDragEvents() {
 
 function setupBlockEvents() {
     document.querySelectorAll('.schedule-block').forEach(block => {
-        // Drag events - use event capturing for more responsive handling
+        // Drag events
         block.addEventListener('dragstart', handleBlockDragStart);
         block.addEventListener('dragend', handleDragEnd);
-        block.addEventListener('dragover', handleBlockDragOver);
-        block.addEventListener('dragleave', handleBlockDragLeave);
-        block.addEventListener('drop', handleBlockDrop);
 
         // Input events
         block.querySelectorAll('.block-label-input, .block-time-input, .block-notes-input').forEach(input => {
@@ -374,10 +375,8 @@ function setupBottomDropZone() {
         if (!draggedItem) return;
 
         if (draggedFromLibrary) {
-            // Add new block at end
             addBlockFromLibrary(draggedItem, scheduleBlocks.length);
         } else if (draggedItem.blockId) {
-            // Move existing block to end
             reorderBlock(draggedItem.blockId, scheduleBlocks.length);
         }
     });
@@ -400,34 +399,142 @@ function setupDropZone() {
 }
 
 function setupDragAndDrop() {
-    // Make schedule list a drop target
+    // Make the entire schedule list container a drop target
     if (scheduleListEl) {
-        scheduleListEl.addEventListener('dragover', (e) => {
-            e.preventDefault();
+        // Remove existing listeners
+        scheduleListEl.removeEventListener('dragover', handleScheduleListDragOver);
+        scheduleListEl.removeEventListener('drop', handleScheduleListDrop);
+        scheduleListEl.removeEventListener('dragleave', handleScheduleListDragLeave);
+
+        // Add listeners
+        scheduleListEl.addEventListener('dragover', handleScheduleListDragOver);
+        scheduleListEl.addEventListener('drop', handleScheduleListDrop);
+        scheduleListEl.addEventListener('dragleave', handleScheduleListDragLeave);
+    }
+}
+
+// Handle dragover on the entire schedule list
+function handleScheduleListDragOver(e) {
+    e.preventDefault();
+
+    if (!draggedItem) return;
+
+    // Find which block we're hovering over
+    const blockEl = e.target.closest('.schedule-block');
+    const bottomZone = e.target.closest('.bottom-drop-zone');
+    const dropZone = e.target.closest('.drop-zone:not(.bottom-drop-zone)');
+
+    // Clear all previous indicators
+    document.querySelectorAll('.schedule-block').forEach(b => {
+        b.classList.remove('drag-over-top', 'drag-over-bottom');
+    });
+
+    if (blockEl) {
+        // Skip if dropping on self
+        if (!draggedFromLibrary && blockEl.dataset.blockId === draggedItem.blockId) return;
+
+        const rect = blockEl.getBoundingClientRect();
+        const offsetY = e.clientY - rect.top;
+        const threshold = rect.height * 0.5;
+
+        if (offsetY < threshold) {
+            blockEl.classList.add('drag-over-top');
+        } else {
+            blockEl.classList.add('drag-over-bottom');
+        }
+    } else if (bottomZone) {
+        bottomZone.classList.add('drag-over');
+    } else if (dropZone) {
+        dropZone.classList.add('drag-over');
+    }
+}
+
+// Handle drop on the schedule list
+function handleScheduleListDrop(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!draggedItem) return;
+
+    // Clear all visual states
+    document.querySelectorAll('.drag-over, .drag-over-top, .drag-over-bottom').forEach(el => {
+        el.classList.remove('drag-over', 'drag-over-top', 'drag-over-bottom');
+    });
+
+    // Check where we dropped
+    const blockEl = e.target.closest('.schedule-block');
+    const bottomZone = e.target.closest('.bottom-drop-zone');
+    const dropZone = e.target.closest('.drop-zone:not(.bottom-drop-zone)');
+
+    let insertIndex = scheduleBlocks.length; // Default to end
+
+    if (blockEl) {
+        // Skip if dropping on self
+        if (!draggedFromLibrary && blockEl.dataset.blockId === draggedItem.blockId) return;
+
+        const targetIndex = parseInt(blockEl.dataset.index, 10);
+        const rect = blockEl.getBoundingClientRect();
+        const offsetY = e.clientY - rect.top;
+        const threshold = rect.height * 0.5;
+
+        insertIndex = offsetY < threshold ? targetIndex : targetIndex + 1;
+    } else if (bottomZone || dropZone) {
+        // Dropped on a drop zone - add to end
+        insertIndex = scheduleBlocks.length;
+    } else {
+        // Dropped somewhere else in the list - add to end
+        insertIndex = scheduleBlocks.length;
+    }
+
+    // Perform the action
+    if (draggedFromLibrary) {
+        addBlockFromLibrary(draggedItem, insertIndex);
+    } else if (draggedItem.blockId) {
+        reorderBlock(draggedItem.blockId, insertIndex);
+    }
+}
+
+function handleScheduleListDragLeave(e) {
+    // Only clear if actually leaving the schedule list
+    if (!scheduleListEl.contains(e.relatedTarget)) {
+        document.querySelectorAll('.drag-over, .drag-over-top, .drag-over-bottom').forEach(el => {
+            el.classList.remove('drag-over', 'drag-over-top', 'drag-over-bottom');
         });
     }
 }
 
 function handleLibraryDragStart(e) {
+    e.stopPropagation();
     draggedFromLibrary = true;
+
     const card = e.target.closest('.visual-card');
+    if (!card) return;
+
     draggedItem = {
-        cardId: card?.dataset.cardId,
-        customCardId: card?.dataset.customCardId
+        cardId: card.dataset.cardId || null,
+        customCardId: card.dataset.customCardId || null
     };
-    card?.classList.add('dragging');
+
+    card.classList.add('dragging');
     e.dataTransfer.effectAllowed = 'copy';
-    e.dataTransfer.setData('text/plain', 'card'); // Required for Firefox
+    e.dataTransfer.setData('text/plain', JSON.stringify(draggedItem));
+
+    // Set drag image
+    if (e.dataTransfer.setDragImage) {
+        e.dataTransfer.setDragImage(card, card.offsetWidth / 2, card.offsetHeight / 2);
+    }
 }
 
 function handleBlockDragStart(e) {
     // Don't start drag if clicking on inputs
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'BUTTON') {
         e.preventDefault();
         return;
     }
 
+    e.stopPropagation();
     draggedFromLibrary = false;
+
     const blockEl = e.target.closest('.schedule-block');
     if (!blockEl) return;
 
@@ -435,7 +542,7 @@ function handleBlockDragStart(e) {
     draggedItem = { blockId };
     blockEl.classList.add('dragging');
     e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/plain', 'block'); // Required for Firefox
+    e.dataTransfer.setData('text/plain', JSON.stringify(draggedItem));
 }
 
 function handleDragEnd(e) {
@@ -448,81 +555,6 @@ function handleDragEnd(e) {
     });
     draggedItem = null;
     draggedFromLibrary = false;
-}
-
-function handleBlockDragOver(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (!draggedItem) return;
-
-    const blockEl = e.target.closest('.schedule-block');
-    if (!blockEl) return;
-
-    // Don't allow dropping on itself
-    if (!draggedFromLibrary && blockEl.dataset.blockId === draggedItem.blockId) return;
-
-    const rect = blockEl.getBoundingClientRect();
-    const offsetY = e.clientY - rect.top;
-    const threshold = rect.height * 0.5;
-
-    // Clear previous states from all blocks first
-    document.querySelectorAll('.schedule-block').forEach(b => {
-        if (b !== blockEl) {
-            b.classList.remove('drag-over-top', 'drag-over-bottom');
-        }
-    });
-
-    blockEl.classList.remove('drag-over-top', 'drag-over-bottom');
-
-    // Always default to adding BELOW the block (more intuitive)
-    if (offsetY < threshold) {
-        blockEl.classList.add('drag-over-top');
-    } else {
-        blockEl.classList.add('drag-over-bottom');
-    }
-}
-
-function handleBlockDragLeave(e) {
-    // Only remove if actually leaving the block (not entering a child)
-    const blockEl = e.target.closest('.schedule-block');
-    if (blockEl && !blockEl.contains(e.relatedTarget)) {
-        blockEl.classList.remove('drag-over-top', 'drag-over-bottom');
-    }
-}
-
-function handleBlockDrop(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (!draggedItem) return;
-
-    const targetBlockEl = e.target.closest('.schedule-block');
-    if (!targetBlockEl) return;
-
-    const targetIndex = parseInt(targetBlockEl.dataset.index, 10);
-    const rect = targetBlockEl.getBoundingClientRect();
-    const offsetY = e.clientY - rect.top;
-    const threshold = rect.height * 0.5;
-
-    // Determine insert position - below by default for intuitive UX
-    let insertIndex;
-    if (offsetY < threshold) {
-        insertIndex = targetIndex; // Insert above (at this index)
-    } else {
-        insertIndex = targetIndex + 1; // Insert below (after this index)
-    }
-
-    if (draggedFromLibrary) {
-        // Add new block from library
-        addBlockFromLibrary(draggedItem, insertIndex);
-    } else {
-        // Reorder existing block
-        reorderBlock(draggedItem.blockId, insertIndex);
-    }
-
-    // Clear visual states
-    targetBlockEl.classList.remove('drag-over-top', 'drag-over-bottom');
 }
 
 function handleDropZoneDrop(e) {
