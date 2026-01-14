@@ -99,11 +99,18 @@ function renderDisplayBlock(block, index) {
     const endTimeStr = block.endTime ? ScheduleData.formatTime(block.endTime) : '';
     const timeRangeDisplay = startTimeStr && endTimeStr ? `${startTimeStr} - ${endTimeStr}` : '';
 
+    // Calculate size class based on duration
+    const duration = block.duration || 30;
+    let sizeClass = 'duration-short';  // < 30 min
+    if (duration >= 60) sizeClass = 'duration-long';
+    else if (duration >= 45) sizeClass = 'duration-medium';
+
     return `
-        <div class="display-block ${isBreak ? 'is-break' : ''}"
+        <div class="display-block ${isBreak ? 'is-break' : ''} ${sizeClass}"
              data-block-id="${block.id}"
              data-index="${index}"
-             style="--block-color: ${color}">
+             data-duration="${duration}"
+             style="--block-color: ${color}; --block-duration: ${duration}">
 
             <div class="display-block-time-badge">
                 ${timeRangeDisplay || `Block ${index + 1}`}
