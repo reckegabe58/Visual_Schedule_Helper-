@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <!-- Music - Musical notes -->
+  <circle cx="40" cy="40" r="26" fill="currentColor" fill-opacity="0.15"/>
+  <ellipse cx="26" cy="52" rx="9" ry="7" fill="currentColor"/>
+  <ellipse cx="54" cy="46" rx="9" ry="7" fill="currentColor"/>
+  <rect x="33" y="18" width="4" height="36" rx="2" fill="currentColor"/>
+  <rect x="61" y="12" width="4" height="36" rx="2" fill="currentColor"/>
+  <path d="M35 18C35 18 48 14 63 12V20C48 22 35 26 35 26V18Z" fill="currentColor"/>
+</svg>

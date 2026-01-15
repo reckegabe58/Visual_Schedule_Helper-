@@ -72,7 +72,7 @@
     {
       "id": "symphony",
       "label": "Symphony Math",
-      "category": "literacy",
+      "category": "academic",
       "image": "assets/visuals/symphony.svg",
       "color": "#6aa3b5",
       "defaultDuration": 30
@@ -126,6 +126,14 @@
       "category": "specials",
       "image": "assets/visuals/art.svg",
       "color": "#b39789",
+      "defaultDuration": 45
+    },
+    {
+      "id": "music",
+      "label": "Music",
+      "category": "specials",
+      "image": "assets/visuals/music.svg",
+      "color": "#8b6b9c",
       "defaultDuration": 45
     }
   ],

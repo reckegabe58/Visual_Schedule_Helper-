@@ -82,6 +82,16 @@ function renderDisplaySchedule() {
         return;
     }
 
+    // Add layout class based on number of blocks to fit on screen
+    container.classList.remove('layout-single', 'layout-compact', 'layout-grid');
+    if (displayBlocks.length <= 4) {
+        container.classList.add('layout-single');
+    } else if (displayBlocks.length <= 7) {
+        container.classList.add('layout-compact');
+    } else {
+        container.classList.add('layout-grid');
+    }
+
     container.innerHTML = displayBlocks.map((block, index) => renderDisplayBlock(block, index)).join('');
     updateBlockStates();
 }
