@@ -74,92 +74,56 @@
 .display-block {
     display: flex;
     align-items: center;
-    gap: var(--space-5);
-    padding: var(--space-5);
-    background: var(--color-bg-surface);
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background: white;
     border-radius: var(--radius-lg);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    border-left: 8px solid var(--block-color, var(--color-primary));
-    transition: opacity 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-left: 6px solid var(--block-color, var(--color-primary));
     position: relative;
 }
 
-/* Current block - highly visible */
+/* Current block - simple colored background highlight */
 .display-block.is-current {
-    box-shadow:
-        0 0 0 4px var(--block-color, var(--color-primary)),
-        0 4px 12px rgba(0, 0, 0, 0.1);
-    background: var(--color-bg-surface);
-    border-left-width: 10px;
-    z-index: 1;
+    background: #fffde7;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
-.display-block.is-current::before {
-    display: none;
-}
-
-.display-block.is-current::after {
-    opacity: 1;
-    height: 4px;
-}
-
-.display-block.is-current .display-block-time {
-    color: var(--block-color, var(--color-primary));
-    font-weight: 700;
-}
-
-/* Completed blocks - subtle */
+/* Completed blocks - slightly faded */
 .display-block.is-completed {
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
-.display-block.is-completed .display-block-icon {
-    filter: grayscale(30%);
-}
-
-/* Upcoming blocks - normal */
+/* Upcoming blocks - full visibility */
 .display-block.is-upcoming {
-    opacity: 0.85;
+    opacity: 1;
 }
 
-/* ===== Block Time Badge (replaces order number) ===== */
+/* ===== Block Time Badge ===== */
 .display-block-time-badge {
-    min-width: 140px;
+    min-width: 120px;
     padding: var(--space-2) var(--space-3);
     border-radius: var(--radius-md);
     background-color: var(--block-color, var(--color-primary));
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-family: var(--font-display);
     font-size: var(--text-sm);
     font-weight: 600;
     color: white;
     flex-shrink: 0;
     text-align: center;
-    white-space: nowrap;
-}
-
-.display-block.is-current .display-block-time-badge {
-    background-color: var(--block-color, var(--color-primary));
-    color: white;
 }
 
 /* ===== Block Icon ===== */
 .display-block-icon {
-    width: 80px;
-    height: 80px;
-    border-radius: var(--radius-lg);
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--space-3);
+    padding: var(--space-2);
     flex-shrink: 0;
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
-.display-block.is-current .display-block-icon {
-    background-color: rgba(0, 0, 0, 0.08);
+    background-color: #f5f5f5;
 }
 
 .display-block-icon img {
@@ -226,44 +190,25 @@
 /* ===== Current Indicator ===== */
 .current-indicator {
     display: none;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-4);
-    background: var(--block-color, var(--color-primary));
+    padding: var(--space-1) var(--space-3);
+    background: #4caf50;
     color: white;
     border-radius: var(--radius-full);
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: var(--text-sm);
+    font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    animation: pulse 2s ease-in-out infinite;
 }
 
 .display-block.is-current .current-indicator {
-    display: flex;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
 }
 
-@keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 0.8;
-        transform: scale(1.05);
-    }
-}
-
-/* ===== Progress Bar ===== */
+/* ===== Progress Bar - Hidden ===== */
 .display-block-progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 6px;
-    background: var(--block-color, var(--color-primary));
-    border-radius: 0 3px 3px 0;
-    transition: width 1s linear;
+    display: none;
 }
 
 /* ===== Empty State ===== */
@@ -398,31 +343,8 @@
 .display-block:nth-child(9) { animation-delay: 0.45s; }
 .display-block:nth-child(10) { animation-delay: 0.5s; }
 
-/* ===== Break Blocks - Distinct Style ===== */
-.display-block.is-break {
-    border-left-color: var(--color-ochre);
-    background: linear-gradient(90deg, var(--color-ochre-10) 0%, var(--color-bg-surface) 30%);
-}
-
-.display-block.is-break.is-current {
-    box-shadow:
-        0 0 0 4px var(--color-ochre),
-        var(--shadow-xl);
-}
-
-.display-block.is-break .display-block-time-badge {
-    background: var(--color-ochre-10);
-    color: var(--color-ochre);
-}
-
-.display-block.is-break.is-current .display-block-time-badge {
-    background: var(--color-ochre);
-    color: white;
-}
-
-.display-block.is-break .current-indicator {
-    background: var(--color-ochre);
-}
+/* ===== Break Blocks ===== */
+/* Break blocks use the same styling as regular blocks - color comes from --block-color */
 
 /* ===== Duration-Based Block Sizing ===== */
 /* Height scales with duration - longer activities get taller cards */
@@ -505,9 +427,9 @@
 }
 
 .display-schedule.layout-compact .display-block-icon {
-    width: 70px;
-    height: 70px;
-    min-width: 70px;
+    width: 55px;
+    height: 55px;
+    min-width: 55px;
     flex-shrink: 0;
 }
 
@@ -541,9 +463,9 @@
 }
 
 .display-schedule.layout-grid .display-block-icon {
-    width: 60px;
-    height: 60px;
-    min-width: 60px;
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
     flex-shrink: 0;
 }
 
@@ -593,9 +515,9 @@
 }
 
 .display-schedule.layout-dense .display-block-icon {
-    width: 50px;
-    height: 50px;
-    min-width: 50px;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
     flex-shrink: 0;
 }
 
