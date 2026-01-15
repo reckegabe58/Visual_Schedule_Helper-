@@ -83,13 +83,25 @@ function renderDisplaySchedule() {
     }
 
     // Add layout class based on number of blocks to fit on screen
-    container.classList.remove('layout-single', 'layout-compact', 'layout-grid');
-    if (displayBlocks.length <= 4) {
+    container.classList.remove('layout-single', 'layout-compact', 'layout-grid', 'layout-dense');
+    container.style.gridTemplateRows = ''; // Reset
+
+    const blockCount = displayBlocks.length;
+
+    if (blockCount <= 4) {
         container.classList.add('layout-single');
-    } else if (displayBlocks.length <= 7) {
+    } else if (blockCount <= 7) {
         container.classList.add('layout-compact');
-    } else {
+    } else if (blockCount <= 9) {
         container.classList.add('layout-grid');
+        // Set rows so items flow down first column, then second
+        const rowCount = Math.ceil(blockCount / 2);
+        container.style.gridTemplateRows = `repeat(${rowCount}, 1fr)`;
+    } else {
+        // 10+ blocks - use dense layout
+        container.classList.add('layout-dense');
+        const rowCount = Math.ceil(blockCount / 2);
+        container.style.gridTemplateRows = `repeat(${rowCount}, 1fr)`;
     }
 
     container.innerHTML = displayBlocks.map((block, index) => renderDisplayBlock(block, index)).join('');
