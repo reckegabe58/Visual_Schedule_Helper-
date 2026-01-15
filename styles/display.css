@@ -567,42 +567,34 @@
     display: none;
 }
 
-/* Grid mode - many blocks, 2 columns */
+/* Grid mode - many blocks, 2 columns flowing top-to-bottom */
 .display-schedule.layout-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-3);
+    grid-auto-flow: column;
+    gap: var(--space-2);
+    max-height: calc(100vh - 140px);
 }
 
 .display-schedule.layout-grid .display-block {
-    padding: var(--space-3);
-    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    gap: var(--space-2);
     min-height: auto;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
 }
 
 .display-schedule.layout-grid .display-block-icon {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
 }
 
 .display-schedule.layout-grid .display-block-label {
-    font-size: var(--text-xl);
+    font-size: var(--text-lg);
 }
 
 .display-schedule.layout-grid .display-block-time-badge {
-    min-width: auto;
-    padding: var(--space-2);
+    min-width: 110px;
+    padding: var(--space-1) var(--space-2);
     font-size: var(--text-sm);
-    order: -1;
-}
-
-.display-schedule.layout-grid .display-block-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .display-schedule.layout-grid .display-block-duration,
@@ -612,8 +604,8 @@
 
 .display-schedule.layout-grid .current-indicator {
     position: absolute;
-    top: var(--space-2);
-    right: var(--space-2);
+    top: var(--space-1);
+    right: var(--space-1);
     padding: var(--space-1) var(--space-2);
     font-size: 10px;
 }
@@ -622,12 +614,71 @@
     font-size: 12px;
 }
 
-/* Override duration heights in compact/grid modes */
+/* Extra dense mode - 10+ blocks */
+.display-schedule.layout-dense {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-flow: column;
+    gap: var(--space-1);
+    max-height: calc(100vh - 120px);
+}
+
+.display-schedule.layout-dense .display-block {
+    padding: var(--space-2);
+    gap: var(--space-2);
+    min-height: auto;
+    border-left-width: 6px;
+}
+
+.display-schedule.layout-dense .display-block::before,
+.display-schedule.layout-dense .display-block::after {
+    display: none;
+}
+
+.display-schedule.layout-dense .display-block-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.display-schedule.layout-dense .display-block-label {
+    font-size: var(--text-base);
+    margin-bottom: 0;
+}
+
+.display-schedule.layout-dense .display-block-time-badge {
+    min-width: 90px;
+    padding: var(--space-1);
+    font-size: var(--text-xs);
+}
+
+.display-schedule.layout-dense .display-block-duration,
+.display-schedule.layout-dense .display-block-notes,
+.display-schedule.layout-dense .display-block-time {
+    display: none;
+}
+
+.display-schedule.layout-dense .current-indicator {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    padding: 2px 6px;
+    font-size: 9px;
+    gap: 2px;
+}
+
+.display-schedule.layout-dense .current-indicator .material-symbols-outlined {
+    font-size: 10px;
+}
+
+/* Override duration heights in compact/grid/dense modes */
 .display-schedule.layout-compact .display-block.duration-short,
 .display-schedule.layout-compact .display-block.duration-medium,
 .display-schedule.layout-compact .display-block.duration-long,
 .display-schedule.layout-grid .display-block.duration-short,
 .display-schedule.layout-grid .display-block.duration-medium,
-.display-schedule.layout-grid .display-block.duration-long {
+.display-schedule.layout-grid .display-block.duration-long,
+.display-schedule.layout-dense .display-block.duration-short,
+.display-schedule.layout-dense .display-block.duration-medium,
+.display-schedule.layout-dense .display-block.duration-long {
     min-height: auto;
 }
