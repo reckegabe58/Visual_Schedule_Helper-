@@ -159,17 +159,18 @@
 
 /* ===== Block Time Badge (replaces order number) ===== */
 .display-block-time-badge {
-    min-width: 140px;
-    padding: var(--space-3) var(--space-4);
+    min-width: 180px;
+    padding: var(--space-4) var(--space-5);
     border-radius: var(--radius-lg);
     background: linear-gradient(145deg,
         color-mix(in srgb, var(--block-color, var(--color-primary)) 15%, var(--color-bg-base)) 0%,
         color-mix(in srgb, var(--block-color, var(--color-primary)) 25%, var(--color-bg-base)) 100%);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     font-family: var(--font-display);
-    font-size: var(--text-lg);
+    font-size: var(--text-xl);
     font-weight: 700;
     color: var(--block-color, var(--color-text-primary));
     flex-shrink: 0;
@@ -178,7 +179,7 @@
         0 2px 8px color-mix(in srgb, var(--block-color, var(--color-primary)) 15%, transparent);
     transition: all 0.3s ease;
     text-align: center;
-    white-space: nowrap;
+    line-height: 1.3;
 }
 
 .display-block.is-current .display-block-time-badge {
@@ -241,7 +242,7 @@
 }
 
 .display-block.is-current .display-block-label {
-    color: var(--color-primary-dark);
+    color: color-mix(in srgb, var(--block-color, var(--color-primary)) 80%, black);
 }
 
 .display-block-time {
@@ -286,7 +287,7 @@
     align-items: center;
     gap: var(--space-2);
     padding: var(--space-2) var(--space-4);
-    background: var(--color-primary);
+    background: var(--block-color, var(--color-primary));
     color: white;
     border-radius: var(--radius-full);
     font-family: var(--font-display);
@@ -318,7 +319,7 @@
     bottom: 0;
     left: 0;
     height: 6px;
-    background: var(--color-primary);
+    background: var(--block-color, var(--color-primary));
     border-radius: 0 3px 3px 0;
     transition: width 1s linear;
 }
@@ -479,4 +480,94 @@
 
 .display-block.is-break .current-indicator {
     background: var(--color-ochre);
+}
+
+/* ===== Duration-Based Block Sizing ===== */
+/* Short blocks (< 30 min) - compact */
+.display-block.duration-short {
+    padding: var(--space-4);
+    gap: var(--space-4);
+}
+
+.display-block.duration-short .display-block-icon {
+    width: 80px;
+    height: 80px;
+}
+
+.display-block.duration-short .display-block-label {
+    font-size: var(--text-2xl);
+}
+
+.display-block.duration-short .display-block-time-badge {
+    min-width: 150px;
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-lg);
+}
+
+/* Medium blocks (45-59 min) - standard */
+.display-block.duration-medium {
+    padding: var(--space-6);
+    gap: var(--space-6);
+}
+
+.display-block.duration-medium .display-block-icon {
+    width: 110px;
+    height: 110px;
+}
+
+.display-block.duration-medium .display-block-label {
+    font-size: var(--text-3xl);
+}
+
+.display-block.duration-medium .display-block-time-badge {
+    min-width: 180px;
+    padding: var(--space-4) var(--space-5);
+    font-size: var(--text-xl);
+}
+
+/* Long blocks (60+ min) - prominent */
+.display-block.duration-long {
+    padding: var(--space-8);
+    gap: var(--space-8);
+}
+
+.display-block.duration-long .display-block-icon {
+    width: 140px;
+    height: 140px;
+}
+
+.display-block.duration-long .display-block-label {
+    font-size: var(--text-4xl);
+}
+
+.display-block.duration-long .display-block-time-badge {
+    min-width: 200px;
+    padding: var(--space-5) var(--space-6);
+    font-size: var(--text-2xl);
+}
+
+.display-block.duration-long .display-block-notes {
+    font-size: var(--text-xl);
+}
+
+.display-block.duration-long .display-block-duration {
+    font-size: var(--text-lg);
+    padding: var(--space-3) var(--space-4);
+}
+
+/* Large screen enhancements for long blocks */
+@media (min-width: 1200px) {
+    .display-block.duration-long .display-block-icon {
+        width: 160px;
+        height: 160px;
+    }
+
+    .display-block.duration-long .display-block-label {
+        font-size: var(--text-5xl);
+    }
+
+    .display-block.duration-long .display-block-time-badge {
+        min-width: 220px;
+        font-size: var(--text-2xl);
+    }
 }
