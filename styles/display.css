@@ -483,91 +483,45 @@
 }
 
 /* ===== Duration-Based Block Sizing ===== */
-/* Short blocks (< 30 min) - compact */
+/* Height scales with duration - longer activities get taller cards */
+
+/* Short blocks (< 45 min) - compact height */
 .display-block.duration-short {
-    padding: var(--space-4);
-    gap: var(--space-4);
+    min-height: 100px;
 }
 
-.display-block.duration-short .display-block-icon {
-    width: 80px;
-    height: 80px;
-}
-
-.display-block.duration-short .display-block-label {
-    font-size: var(--text-2xl);
-}
-
-.display-block.duration-short .display-block-time-badge {
-    min-width: 150px;
-    padding: var(--space-3) var(--space-4);
-    font-size: var(--text-lg);
-}
-
-/* Medium blocks (45-59 min) - standard */
+/* Medium blocks (45-59 min) - standard height */
 .display-block.duration-medium {
-    padding: var(--space-6);
-    gap: var(--space-6);
+    min-height: 140px;
 }
 
-.display-block.duration-medium .display-block-icon {
-    width: 110px;
-    height: 110px;
-}
-
-.display-block.duration-medium .display-block-label {
-    font-size: var(--text-3xl);
-}
-
-.display-block.duration-medium .display-block-time-badge {
-    min-width: 180px;
-    padding: var(--space-4) var(--space-5);
-    font-size: var(--text-xl);
-}
-
-/* Long blocks (60+ min) - prominent */
+/* Long blocks (60+ min) - taller to reflect duration */
 .display-block.duration-long {
-    padding: var(--space-8);
-    gap: var(--space-8);
+    min-height: 180px;
 }
 
-.display-block.duration-long .display-block-icon {
-    width: 140px;
-    height: 140px;
+/* Extra long blocks (90+ min) - even taller */
+.display-block[data-duration="90"],
+.display-block[data-duration="120"] {
+    min-height: 220px;
 }
 
-.display-block.duration-long .display-block-label {
-    font-size: var(--text-4xl);
-}
-
-.display-block.duration-long .display-block-time-badge {
-    min-width: 200px;
-    padding: var(--space-5) var(--space-6);
-    font-size: var(--text-2xl);
-}
-
-.display-block.duration-long .display-block-notes {
-    font-size: var(--text-xl);
-}
-
-.display-block.duration-long .display-block-duration {
-    font-size: var(--text-lg);
-    padding: var(--space-3) var(--space-4);
-}
-
-/* Large screen enhancements for long blocks */
+/* Large screen: increase heights proportionally */
 @media (min-width: 1200px) {
-    .display-block.duration-long .display-block-icon {
-        width: 160px;
-        height: 160px;
+    .display-block.duration-short {
+        min-height: 110px;
     }
 
-    .display-block.duration-long .display-block-label {
-        font-size: var(--text-5xl);
+    .display-block.duration-medium {
+        min-height: 160px;
     }
 
-    .display-block.duration-long .display-block-time-badge {
-        min-width: 220px;
-        font-size: var(--text-2xl);
+    .display-block.duration-long {
+        min-height: 200px;
+    }
+
+    .display-block[data-duration="90"],
+    .display-block[data-duration="120"] {
+        min-height: 260px;
     }
 }
