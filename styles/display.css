@@ -75,7 +75,7 @@
     display: flex;
     align-items: center;
     gap: var(--space-4);
-    padding: var(--space-4);
+    padding: var(--space-4) var(--space-5);
     background: white;
     border-radius: var(--radius-lg);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -101,22 +101,23 @@
 
 /* ===== Block Time Badge ===== */
 .display-block-time-badge {
-    min-width: 120px;
-    padding: var(--space-2) var(--space-3);
+    min-width: 130px;
+    padding: var(--space-3) var(--space-4);
     border-radius: var(--radius-md);
     background-color: var(--block-color, var(--color-primary));
     font-family: var(--font-display);
-    font-size: var(--text-sm);
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
     color: white;
     flex-shrink: 0;
     text-align: center;
+    line-height: 1.2;
 }
 
 /* ===== Block Icon ===== */
 .display-block-icon {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     border-radius: var(--radius-md);
     display: flex;
     align-items: center;
@@ -136,15 +137,40 @@
 .display-block-content {
     flex: 1;
     min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
 }
 
 .display-block-label {
     font-family: var(--font-display);
-    font-size: var(--text-3xl);
+    font-size: 28px;
     font-weight: 800;
     color: var(--color-text-primary);
-    margin-bottom: var(--space-2);
     line-height: 1.2;
+    flex: 1;
+}
+
+.display-block-notes {
+    display: none;
+}
+
+/* Duration badge - prominent display */
+.display-block-duration {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: var(--space-2) var(--space-4);
+    background: #f0f0f0;
+    border-radius: var(--radius-full);
+    font-size: 18px;
+    font-weight: 700;
+    color: #555;
+    flex-shrink: 0;
+}
+
+.display-block-duration .material-symbols-outlined {
+    font-size: 22px;
 }
 
 .display-block.is-current .display-block-label {
@@ -416,13 +442,13 @@
 .display-schedule.layout-compact {
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
+    gap: var(--space-2);
 }
 
 .display-schedule.layout-compact .display-block {
     flex: 1;
-    padding: var(--space-4);
-    gap: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    gap: var(--space-3);
     min-height: 0;
 }
 
@@ -434,17 +460,22 @@
 }
 
 .display-schedule.layout-compact .display-block-label {
-    font-size: var(--text-2xl);
+    font-size: 22px;
 }
 
 .display-schedule.layout-compact .display-block-time-badge {
-    min-width: 140px;
+    min-width: 115px;
     padding: var(--space-2) var(--space-3);
-    font-size: var(--text-base);
+    font-size: 14px;
 }
 
 .display-schedule.layout-compact .display-block-duration {
-    display: none;
+    font-size: 14px;
+    padding: var(--space-1) var(--space-3);
+}
+
+.display-schedule.layout-compact .display-block-duration .material-symbols-outlined {
+    font-size: 16px;
 }
 
 /* Grid mode - 8-9 blocks, 2 columns flowing top-to-bottom */
@@ -452,7 +483,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-auto-flow: column;
-    gap: var(--space-3);
+    gap: var(--space-2);
     height: calc(100vh - 160px);
 }
 
@@ -470,16 +501,24 @@
 }
 
 .display-schedule.layout-grid .display-block-label {
-    font-size: var(--text-xl);
+    font-size: 20px;
 }
 
 .display-schedule.layout-grid .display-block-time-badge {
-    min-width: 120px;
+    min-width: 105px;
     padding: var(--space-2);
-    font-size: var(--text-sm);
+    font-size: 13px;
 }
 
-.display-schedule.layout-grid .display-block-duration,
+.display-schedule.layout-grid .display-block-duration {
+    font-size: 13px;
+    padding: var(--space-1) var(--space-2);
+}
+
+.display-schedule.layout-grid .display-block-duration .material-symbols-outlined {
+    font-size: 14px;
+}
+
 .display-schedule.layout-grid .display-block-notes {
     display: none;
 }
@@ -498,15 +537,15 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-auto-flow: column;
-    gap: var(--space-2);
+    gap: var(--space-1);
     height: calc(100vh - 150px);
 }
 
 .display-schedule.layout-dense .display-block {
     padding: var(--space-2) var(--space-3);
-    gap: var(--space-3);
+    gap: var(--space-2);
     min-height: 0;
-    border-left-width: 6px;
+    border-left-width: 5px;
 }
 
 .display-schedule.layout-dense .display-block::before,
@@ -522,19 +561,25 @@
 }
 
 .display-schedule.layout-dense .display-block-label {
-    font-size: var(--text-lg);
-    margin-bottom: 0;
+    font-size: 16px;
 }
 
 .display-schedule.layout-dense .display-block-time-badge {
-    min-width: 100px;
-    padding: var(--space-1) var(--space-2);
-    font-size: var(--text-xs);
+    min-width: 90px;
+    padding: 4px 8px;
+    font-size: 11px;
 }
 
-.display-schedule.layout-dense .display-block-duration,
-.display-schedule.layout-dense .display-block-notes,
-.display-schedule.layout-dense .display-block-time {
+.display-schedule.layout-dense .display-block-duration {
+    font-size: 11px;
+    padding: 2px 8px;
+}
+
+.display-schedule.layout-dense .display-block-duration .material-symbols-outlined {
+    font-size: 12px;
+}
+
+.display-schedule.layout-dense .display-block-notes {
     display: none;
 }
 
