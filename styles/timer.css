@@ -1,0 +1,451 @@
+/* ===========================================
+   Visual Timer Styles
+   Fun, engaging countdown timer for classroom
+   =========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body, 'Nunito', sans-serif);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ===== Setup Screen ===== */
+.timer-setup {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+}
+
+.timer-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.back-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+}
+
+.back-link:hover {
+    opacity: 1;
+}
+
+.timer-header h1 {
+    color: white;
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.setup-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.setup-container h2 {
+    color: white;
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Preset Buttons */
+.preset-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    width: 100%;
+}
+
+.preset-btn {
+    padding: 20px 16px;
+    border: none;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.preset-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.preset-btn:active {
+    transform: scale(0.98);
+}
+
+/* Custom Time Input */
+.custom-time {
+    width: 100%;
+    text-align: center;
+}
+
+.custom-time label {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.time-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+}
+
+.time-input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.time-input-group input {
+    width: 100px;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    font-size: 32px;
+    font-weight: 800;
+    text-align: center;
+    color: #333;
+}
+
+.time-input-group input:focus {
+    outline: 4px solid rgba(255, 255, 255, 0.5);
+}
+
+.time-input-group span {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+}
+
+/* Sound Toggle */
+.sound-toggle {
+    margin-top: 8px;
+}
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
+}
+
+.toggle-label input {
+    display: none;
+}
+
+.toggle-switch {
+    width: 50px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 14px;
+    position: relative;
+    transition: background 0.3s;
+}
+
+.toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.toggle-label input:checked + .toggle-switch {
+    background: #4caf50;
+}
+
+.toggle-label input:checked + .toggle-switch::after {
+    transform: translateX(22px);
+}
+
+/* Start Button */
+.start-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 20px 48px;
+    border: none;
+    border-radius: 60px;
+    background: white;
+    color: #667eea;
+    font-size: 24px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.start-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.start-btn .material-symbols-outlined {
+    font-size: 32px;
+}
+
+/* ===== Timer Display (Full Screen) ===== */
+.timer-display {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+    transition: background 1s ease;
+}
+
+.timer-display.warning {
+    background: linear-gradient(135deg, #f5af19 0%, #f12711 100%);
+}
+
+.timer-display.danger {
+    background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+}
+
+.timer-display.paused {
+    background: linear-gradient(135deg, #606c88 0%, #3f4c6b 100%);
+}
+
+/* Timer Visual - Pizza Pie */
+.timer-visual {
+    position: relative;
+    width: min(80vw, 80vh);
+    height: min(80vw, 80vh);
+    max-width: 500px;
+    max-height: 500px;
+}
+
+.pie-timer {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+    filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.3));
+}
+
+.pie-segment {
+    fill: rgba(255, 255, 255, 0.9);
+    stroke: rgba(255, 255, 255, 0.3);
+    stroke-width: 0.5;
+    transition: opacity 0.5s ease, fill 0.3s ease;
+}
+
+.pie-segment.eaten {
+    opacity: 0;
+    transform-origin: 50% 50%;
+}
+
+.pie-segment.warning {
+    fill: rgba(255, 220, 100, 0.9);
+}
+
+.pie-segment.danger {
+    fill: rgba(255, 150, 150, 0.9);
+}
+
+/* Timer Center - Big Numbers */
+.timer-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+}
+
+.time-remaining {
+    font-size: min(20vw, 120px);
+    font-weight: 900;
+    color: white;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.timer-label {
+    font-size: min(4vw, 24px);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+    margin-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Timer Controls */
+.timer-controls {
+    position: fixed;
+    bottom: 40px;
+    display: flex;
+    gap: 20px;
+}
+
+.control-btn {
+    width: 64px;
+    height: 64px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.control-btn .material-symbols-outlined {
+    font-size: 32px;
+}
+
+/* ===== Celebration Screen ===== */
+.celebration {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+#confetti-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.celebration-content {
+    text-align: center;
+    z-index: 10;
+}
+
+.celebration-icon {
+    font-size: 120px;
+    animation: bounce 0.6s ease infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.celebration-content h2 {
+    font-size: 64px;
+    font-weight: 900;
+    color: white;
+    margin: 24px 0;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.done-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 48px;
+    border: none;
+    border-radius: 60px;
+    background: white;
+    color: #11998e;
+    font-size: 24px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.done-btn:hover {
+    transform: scale(1.05);
+}
+
+.done-btn .material-symbols-outlined {
+    font-size: 28px;
+}
+
+/* ===== Animations ===== */
+@keyframes pulse-warning {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.timer-display.danger .time-remaining {
+    animation: pulse-warning 0.5s ease infinite;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+    .preset-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .time-inputs {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .timer-header h1 {
+        font-size: 24px;
+    }
+
+    .celebration-icon {
+        font-size: 80px;
+    }
+
+    .celebration-content h2 {
+        font-size: 40px;
+    }
+}
