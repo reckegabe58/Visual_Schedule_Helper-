@@ -481,7 +481,7 @@
     align-items: stretch;
     gap: var(--space-3);
     padding: var(--space-4);
-    margin-bottom: var(--space-3);
+    margin-bottom: var(--space-5);
     background: linear-gradient(135deg,
         var(--color-bg-surface) 0%,
         color-mix(in srgb, var(--block-color, var(--color-primary)) 5%, var(--color-bg-base)) 100%);
@@ -490,7 +490,7 @@
     transition: all var(--transition-base);
     cursor: grab;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     box-shadow:
         0 2px 8px rgba(0, 0, 0, 0.04),
         0 1px 2px rgba(0, 0, 0, 0.02);
@@ -516,28 +516,80 @@
 }
 
 .schedule-block.dragging {
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: grabbing;
+    transform: scale(0.98);
+    box-shadow: 0 0 0 3px var(--color-ochre), 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    background: repeating-linear-gradient(
+        45deg,
+        var(--color-bg-surface),
+        var(--color-bg-surface) 10px,
+        var(--color-bg-base) 10px,
+        var(--color-bg-base) 20px
+    ) !important;
 }
 
-.schedule-block.drag-over-top::before,
-.schedule-block.drag-over-bottom::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-sky-blue) 100%);
-    border-radius: 2px;
-    z-index: 10;
+/* Drop indicator - prominent line showing where block will be inserted */
+.schedule-block.drag-over-top,
+.schedule-block.drag-over-bottom {
+    position: relative;
 }
 
 .schedule-block.drag-over-top::before {
-    top: -6px;
+    content: 'Drop here';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -24px;
+    height: 40px;
+    background: linear-gradient(180deg, rgba(38, 115, 64, 0.15) 0%, rgba(38, 115, 64, 0.05) 100%);
+    border: 3px dashed var(--color-primary);
+    border-radius: var(--radius-lg);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-primary);
+    animation: dropPulse 1s ease-in-out infinite;
 }
 
 .schedule-block.drag-over-bottom::after {
-    bottom: -6px;
+    content: 'Drop here';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -24px;
+    height: 40px;
+    background: linear-gradient(180deg, rgba(38, 115, 64, 0.05) 0%, rgba(38, 115, 64, 0.15) 100%);
+    border: 3px dashed var(--color-primary);
+    border-radius: var(--radius-lg);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-primary);
+    animation: dropPulse 1s ease-in-out infinite;
+}
+
+/* Highlight the block being hovered over */
+.schedule-block.drag-over-top,
+.schedule-block.drag-over-bottom {
+    box-shadow: 0 0 0 3px var(--color-primary), 0 8px 24px rgba(38, 115, 64, 0.2) !important;
+}
+
+@keyframes dropPulse {
+    0%, 100% {
+        opacity: 0.8;
+        transform: scaleY(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scaleY(1.1);
+    }
 }
 
 .schedule-block.is-current {

@@ -669,14 +669,33 @@ function handleBlockInputChange(e) {
     } else if (field === 'notes') {
         block.notes = value;
     } else if (field === 'startTime') {
-        block.startTime = ScheduleData.parseTimeString(value);
-        if (block.startTime && block.duration) {
-            block.endTime = ScheduleData.calculateEndTime(block.startTime, block.duration);
+        // When start time changes, keep end time fixed and recalculate duration
+        const newStartTime = ScheduleData.parseTimeString(value);
+        if (newStartTime) {
+            block.startTime = newStartTime;
+            if (block.endTime) {
+                // Recalculate duration based on new start time and existing end time
+                block.duration = ScheduleData.calculateDuration(block.startTime, block.endTime);
+                // Ensure minimum duration of 5 minutes
+                if (block.duration < 5) {
+                    block.duration = 5;
+                    block.endTime = ScheduleData.calculateEndTime(block.startTime, block.duration);
+                }
+            }
         }
     } else if (field === 'endTime') {
-        block.endTime = ScheduleData.parseTimeString(value);
-        if (block.startTime && block.endTime) {
-            block.duration = ScheduleData.calculateDuration(block.startTime, block.endTime);
+        // When end time changes, keep start time fixed and recalculate duration
+        const newEndTime = ScheduleData.parseTimeString(value);
+        if (newEndTime) {
+            block.endTime = newEndTime;
+            if (block.startTime) {
+                block.duration = ScheduleData.calculateDuration(block.startTime, block.endTime);
+                // Ensure minimum duration of 5 minutes
+                if (block.duration < 5) {
+                    block.duration = 5;
+                    block.endTime = ScheduleData.calculateEndTime(block.startTime, block.duration);
+                }
+            }
         }
     }
 
